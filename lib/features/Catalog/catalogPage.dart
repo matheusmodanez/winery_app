@@ -13,11 +13,14 @@ class CatalogPage extends StatefulWidget {
 class _CatalogPage extends State<CatalogPage> {
   final _catalogRepository = CatalogRepository();
   late Future<List<Wine>> _futureWineList;
+  int paginaAtual = 0;
+  late PageController pc;
 
   @override
   void initState() {
     listWines();
     super.initState();
+    pc = PageController(initialPage: paginaAtual);
   }
 
   void listWines() {
@@ -27,25 +30,58 @@ class _CatalogPage extends State<CatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Winery')),
-        body: FutureBuilder<List<Wine>>(
-            future: _futureWineList,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.done) {
-                final wines = snapshot.data ?? [];
-                return ListView.builder(
-                    itemCount: wines.length,
-                    itemBuilder: (context, index) {
-                      final wine = wines[index];
-                      return StandardWineItem(wine: wine);
-                    });
-              }
-              return Container();
-            }));
+      body: FutureBuilder<List<Wine>>(
+          future: _futureWineList,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              final wines = snapshot.data ?? [];
+              return ListView.builder(
+                  itemCount: wines.length,
+                  itemBuilder: (context, index) {
+                    final wine = wines[index];
+                    return StandardWineItem(wine: wine);
+                  });
+            }
+            return const Text("A");
+          }),
+      bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+          iconSize: 30,
+          selectedIconTheme: const IconThemeData(color: Colors.white),
+          selectedItemColor: Colors.white,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+          unselectedIconTheme: const IconThemeData(
+            color: Color.fromARGB(255, 126, 126, 126),
+          ),
+          unselectedItemColor: const Color.fromARGB(255, 126, 126, 126),
+          currentIndex: paginaAtual,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.wine_bar), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: ''),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle), label: ''),
+          ],
+          onTap: (pagina) {
+            pc.animateToPage(
+              pagina,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.ease,
+            );
+          }),
+    );
+  }
+
+  setPaginaAtual(pagina) {
+    setState(() {
+      paginaAtual = pagina;
+    });
   }
 }

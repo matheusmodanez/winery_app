@@ -15,19 +15,11 @@ class DatabaseManager {
 
   _initDatabase() async {
     return await openDatabase(join(await getDatabasesPath(), 'winery.db'),
-        version: 1, onCreate: _onCreate);
+        version: 2, onCreate: _onCreate);
   }
 
   _onCreate(Database db, int version) async {
     await db.execute(_wine);
-    await db.insert("wine", {
-      "name": "Château Margaux",
-      "origin": "Bordeaux, França",
-      "notes": "Frutas Vermelhas / Violetas / Tabacos / Tanino Suaves",
-      "idealTemperature": 18.0,
-      "rpClassification": 4,
-      "clientClassification": 3.5
-    });
   }
 
   String get _wine => '''

@@ -20,26 +20,26 @@ class StandardWineItem extends StatelessWidget {
           // onTap: () {
           //   Navigator.pushNamed(context, '/sale-details', arguments: wine);
           // },
-          child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 47, 11, 209).withOpacity(0.1),
-                    const Color.fromARGB(255, 47, 11, 209).withOpacity(0.8),
-                  ],
-                  begin: AlignmentDirectional.topStart,
-                  end: AlignmentDirectional.bottomEnd,
-                ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: StandardWineCard(
-                name: wine.name,
-                origin: wine.origin,
-                notes: wine.notes,
-                idealTemperature: wine.idealTemperature,
-                rpClassification: wine.rpClassification,
-                clientClassification: wine.clientClassification,
-              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  width: 185,
+                  height: 275,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 106, 16, 59),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: StandardWineCard(
+                    name: wine.name,
+                    origin: wine.origin,
+                    notes: wine.notes,
+                    idealTemperature: wine.idealTemperature,
+                    rpClassification: wine.rpClassification,
+                    clientClassification: wine.clientClassification,
+                  )),
+            ],
+          ),
         ),
       ),
     );

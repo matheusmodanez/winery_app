@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class StandardWineCard extends StatelessWidget {
   final String name;
   final String origin;
-  final List<String> notes;
-  final int idealTemperature;
-  final int rpClassification;
-  final int clientClassification;
+  final String notes;
+  final double idealTemperature;
+  final double rpClassification;
+  final double clientClassification;
 
   StandardWineCard({
     super.key,
@@ -26,28 +26,36 @@ class StandardWineCard extends StatelessWidget {
         right: 15,
         top: 20,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white)),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                origin,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+          const SizedBox(
+            width: 150,
+            height: 150,
+            child: Image(
+              image: AssetImage('assets/chateau_margaux.png'),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(name,
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white)),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(origin,
+              style: const TextStyle(fontSize: 16, color: Colors.white)),
+          const SizedBox(
+            height: 10,
+          ),
+          Text('$idealTemperature °C',
+              style: const TextStyle(fontSize: 16, color: Colors.white)),
+          const SizedBox(
+            height: 10,
           ),
         ],
       ),
