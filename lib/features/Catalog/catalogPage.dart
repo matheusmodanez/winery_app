@@ -25,6 +25,7 @@ class _CatalogPage extends State<CatalogPage> {
 
   void listWines() {
     _futureWineList = _catalogRepository.listWines();
+    print(_futureWineList);
   }
 
   @override
@@ -37,10 +38,18 @@ class _CatalogPage extends State<CatalogPage> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
+            } else if (snapshot.hasError) {
+              return const Text('Error fetching data');
             }
             if (snapshot.connectionState == ConnectionState.done) {
               final wines = snapshot.data ?? [];
-              return ListView.builder(
+              return GridView.builder(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 110,
+                  ),
+                  scrollDirection: Axis.vertical,
                   itemCount: wines.length,
                   itemBuilder: (context, index) {
                     final wine = wines[index];
@@ -61,11 +70,11 @@ class _CatalogPage extends State<CatalogPage> {
           unselectedItemColor: const Color.fromARGB(255, 126, 126, 126),
           currentIndex: paginaAtual,
           type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.wine_bar), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.star), label: ''),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), label: ''),
           ],

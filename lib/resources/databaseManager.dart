@@ -15,7 +15,7 @@ class DatabaseManager {
 
   _initDatabase() async {
     return await openDatabase(join(await getDatabasesPath(), 'winery.db'),
-        version: 2, onCreate: _onCreate);
+        version: 1, onCreate: _onCreate);
   }
 
   _onCreate(Database db, int version) async {

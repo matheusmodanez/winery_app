@@ -28,6 +28,7 @@ class StandardWineCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
             width: 150,
@@ -37,7 +38,7 @@ class StandardWineCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 5,
+            height: 25,
           ),
           Text(name,
               style: const TextStyle(
@@ -45,18 +46,15 @@ class StandardWineCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.white)),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Text(origin,
               style: const TextStyle(fontSize: 16, color: Colors.white)),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text('$idealTemperature °C',
-              style: const TextStyle(fontSize: 16, color: Colors.white)),
-          const SizedBox(
-            height: 10,
-          ),
+              style: const TextStyle(fontSize: 16, color: Colors.white))
         ],
       ),
     );
