@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:winery_app/features/Catalog/catalogPage.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:winery_app/features/Catalog/catalogRepository.dart';
-import 'package:winery_app/features/Catalog/winePage.dart';
-import 'package:winery_app/resources/databaseManager.dart';
+import 'package:Winery/features/Catalog/catalogPage.dart';
+import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/features/Catalog/winePage.dart';
+import 'package:Winery/resources/databaseManager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

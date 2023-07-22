@@ -1,4 +1,4 @@
-import 'package:winery_app/domain/entities/wine.dart';
+import 'package:Winery/domain/entities/wine.dart';
 
 class Catalog {
   String? id;

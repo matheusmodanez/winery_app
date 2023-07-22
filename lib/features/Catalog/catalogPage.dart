@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:winery_app/domain/entities/wine.dart';
-import 'package:winery_app/features/Catalog/catalogRepository.dart';
-import 'package:winery_app/shared/components/standardWineItem.dart';
+import 'package:Winery/domain/entities/wine.dart';
+import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/shared/components/standardWineItem.dart';
 
 class CatalogPage extends StatefulWidget {
   const CatalogPage({Key? key}) : super(key: key);

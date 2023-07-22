@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:winery_app/domain/entities/wine.dart';
+import 'package:Winery/domain/entities/wine.dart';
 
 class StandardWineItem extends StatelessWidget {
   final Wine wine;
@@ -47,11 +47,11 @@ class StandardWineItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 150,
                           height: 150,
                           child: Image(
-                            image: AssetImage('assets/chateau_margaux.png'),
+                            image: AssetImage(wine.bottle),
                           ),
                         ),
                         const SizedBox(

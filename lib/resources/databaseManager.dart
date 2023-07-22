@@ -27,10 +27,12 @@ class DatabaseManager {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       origin TEXT,
+      grapeType TEXT,
       notes TEXT,
       idealTemperature DOUBLE,
       rpClassification DOUBLE,
-      clientClassification DOUBLE
+      clientClassification DOUBLE,
+      bottle TEXT
     );
   ''';
 }
