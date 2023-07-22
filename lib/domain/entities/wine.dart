@@ -1,5 +1,5 @@
 class Wine {
-  String? id;
+  int? id;
   String name;
   String origin;
   String grapeType;

@@ -11,6 +11,7 @@ class CatalogRepository {
 
     if (recordsCount == 0) {
       await db.insert("wine", {
+        "id": 0001,
         "name": "Château Margaux",
         "origin": "Bordeaux, França",
         "grapeType": "Cabernet Sauvignon",
@@ -22,6 +23,7 @@ class CatalogRepository {
       });
 
       await db.insert("wine", {
+        "id": 0002,
         "name": "Barolo Piemonte",
         "origin": "Piemonte, Itália",
         "grapeType": "Nebbiolo",
@@ -33,6 +35,7 @@ class CatalogRepository {
       });
 
       await db.insert("wine", {
+        "id": 0003,
         "name": "Las Beatas",
         "origin": "Rioja, Espanha",
         "grapeType": "Tempranillo",
@@ -44,6 +47,7 @@ class CatalogRepository {
       });
 
       await db.insert("wine", {
+        "id": 0004,
         "name": "Covela",
         "origin": "Minho, Portugal",
         "grapeType": "Alvarinho",
@@ -76,6 +80,7 @@ class CatalogRepository {
       return rows
           .map(
             (row) => Wine(
+              id: row['id'],
               name: row['name'],
               origin: row['origin'],
               grapeType: row['grapeType'],
@@ -90,6 +95,27 @@ class CatalogRepository {
     } catch (e) {
       print("Error fetching wines: $e");
       return []; // Return an empty list to avoid rendering errors.
+    }
+  }
+
+  Future<void> updateClientClassification(
+      int? id, double newClassification) async {
+    if (id == null) {
+      print('Error: Wine ID is null');
+      return;
+    }
+
+    try {
+      db = await DatabaseManager.instance.database;
+
+      await db.update(
+        'wine',
+        {"clientClassification": newClassification},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      print("Error updating client classification: $e");
     }
   }
 }

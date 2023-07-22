@@ -1,3 +1,4 @@
+import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,6 +11,7 @@ class WineDetailsPage extends StatefulWidget {
 }
 
 class _WineDetailsPage extends State<WineDetailsPage> {
+  final _catalogRepository = CatalogRepository();
   int paginaAtual = 0;
   late PageController pc;
 
@@ -17,6 +19,10 @@ class _WineDetailsPage extends State<WineDetailsPage> {
   void initState() {
     super.initState();
     pc = PageController(initialPage: paginaAtual);
+  }
+
+  void updateClientClassification(int? id, double newClassification) {
+    _catalogRepository.updateClientClassification(id, newClassification);
   }
 
   @override
@@ -116,14 +122,18 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const Text('Sua Classificação',
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                          )),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              height: 2)),
                       RatingBar.builder(
-                        onRatingUpdate: (newValue) => setState(() => newValue),
+                        onRatingUpdate: (newValue) {
+                          updateClientClassification(wine.id, newValue);
+                        },
                         itemBuilder: (context, index) {
                           return index < wine.clientClassification
                               ? const Icon(
@@ -159,12 +169,42 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                       children: [
                         const Text('Origem',
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 20,
                               fontWeight: FontWeight.w500,
+                              height: 1,
                             )),
                         Text(getCountryFlagEmoji(wine.origin) + wine.origin,
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              height: 2,
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 600,
+                height: 100,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Tipo de Uva',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              height: 1),
+                        ),
+                        Text(wine.grapeType,
+                            style: const TextStyle(
+                              fontSize: 22,
                               fontWeight: FontWeight.w500,
                               height: 2,
                             )),
@@ -187,9 +227,9 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                         const Text(
                           'Notas',
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 20,
                               fontWeight: FontWeight.w500,
-                              height: 2),
+                              height: 1),
                         ),
                         Wrap(
                           spacing: 8,
@@ -207,33 +247,36 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Text('Monitoramento',
                               style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w500,
-                                  height: 2)),
+                                  height: 1)),
                         ),
-                        Row(
-                          children: [
-                            const Text('Temperatura Ideal',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            const Icon(Icons.thermostat),
-                            Text('${wine.idealTemperature} ºC',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Row(
+                            children: [
+                              const Text('Temperatura Ideal',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1)),
+                              const Icon(Icons.thermostat),
+                              Text('${wine.idealTemperature} ºC',
+                                  style: const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1)),
+                            ],
+                          ),
                         )
                       ],
                     ),

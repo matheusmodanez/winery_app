@@ -25,7 +25,6 @@ class _CatalogPage extends State<CatalogPage> {
 
   void listWines() {
     _futureWineList = _catalogRepository.listWines();
-    print(_futureWineList);
   }
 
   @override
