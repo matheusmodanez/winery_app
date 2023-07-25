@@ -1,9 +1,13 @@
+import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:Winery/features/Catalog/catalogPage.dart';
 import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/features/Catalog/winePage.dart';
 import 'package:Winery/resources/databaseManager.dart';
+
+import 'domain/entities/wine.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +18,12 @@ void main() async {
 
   await repository.insertInitialWines(db);
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => WineManageProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,11 +35,19 @@ class MyApp extends StatelessWidget {
       title: 'Winery',
       debugShowCheckedModeBanner: false,
       // theme: lightTheme,
+      initialRoute: '/',
       routes: {
         '/': (context) => const CatalogPage(),
-        '/wineDetails': (context) => WineDetailsPage(),
       },
-      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/wineDetails') {
+          final wine = settings.arguments as Wine;
+          return MaterialPageRoute(
+            builder: (context) => WineDetailsPage(wine: wine),
+          );
+        }
+        return null;
+      },
     );
   }
 }

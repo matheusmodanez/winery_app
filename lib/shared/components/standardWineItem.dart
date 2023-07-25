@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 
+typedef WineTapCallback = void Function(Wine wine);
+
 class StandardWineItem extends StatelessWidget {
   final Wine wine;
-  const StandardWineItem({Key? key, required this.wine}) : super(key: key);
+  final WineTapCallback onTap;
+
+  StandardWineItem({
+    Key? key,
+    required this.wine,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +25,7 @@ class StandardWineItem extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () {
+            onTap(wine);
             Navigator.pushNamed(context, '/wineDetails', arguments: wine);
           },
           child: Column(

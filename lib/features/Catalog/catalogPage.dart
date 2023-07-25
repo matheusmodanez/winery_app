@@ -1,7 +1,11 @@
+import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/shared/components/standardWineItem.dart';
+import 'package:provider/provider.dart';
+
+import '../../shared/components/standardLastAccessesItem.dart';
 
 class CatalogPage extends StatefulWidget {
   const CatalogPage({Key? key}) : super(key: key);
@@ -27,6 +31,12 @@ class _CatalogPage extends State<CatalogPage> {
     _futureWineList = _catalogRepository.listWines();
   }
 
+  void _addLastAccessedWine(Wine wine) {
+    final wineManagerProvider =
+        Provider.of<WineManageProvider>(context, listen: false);
+    wineManagerProvider.addLastAccessedWine(wine);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +52,90 @@ class _CatalogPage extends State<CatalogPage> {
             }
             if (snapshot.connectionState == ConnectionState.done) {
               final wines = snapshot.data ?? [];
-              return GridView.builder(
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 110,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 65, 0, 20),
+                    child: const Text(
+                      'Winery',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                  scrollDirection: Axis.vertical,
-                  itemCount: wines.length,
-                  itemBuilder: (context, index) {
-                    final wine = wines[index];
-                    return StandardWineItem(wine: wine);
-                  });
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: const Text(
+                          'Recentemente acessado',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Consumer<WineManageProvider>(
+                        builder: (context, wineManagerProvider, _) {
+                          final lastAccessedWines =
+                              wineManagerProvider.lastAccessedWines;
+                          return LastAccessedWinesList(
+                              lastAccessedWines: lastAccessedWines);
+                        },
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: const Text(
+                            'Seu catálogo',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 110,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            itemCount: wines.length,
+                            itemBuilder: (context, index) {
+                              final wine = wines[index];
+                              return StandardWineItem(
+                                wine: wine,
+                                onTap: (wine) {
+                                  _addLastAccessedWine(wine);
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/wineDetails',
+                                    arguments: wine,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
             }
             return const Text("A");
           }),
