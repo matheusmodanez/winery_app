@@ -1,4 +1,5 @@
 import 'package:Winery/features/Catalog/wineManageProvider.dart';
+import 'package:Winery/features/Management/managementPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const CatalogPage(),
+        '/management': (context) => const ManagementPage(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/wineDetails') {

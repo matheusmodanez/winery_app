@@ -5,6 +5,7 @@ import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/shared/components/standardWineItem.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/components/customBottomNavigationBar.dart';
 import '../../shared/components/standardLastAccessesItem.dart';
 
 class CatalogPage extends StatefulWidget {
@@ -41,18 +42,19 @@ class _CatalogPage extends State<CatalogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Wine>>(
-          future: _futureWineList,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return const Text('Error fetching data');
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              final wines = snapshot.data ?? [];
-              return Column(
+        future: _futureWineList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return const Text('Error fetching data');
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            final wines = snapshot.data ?? [];
+            return SingleChildScrollView(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -85,87 +87,66 @@ class _CatalogPage extends State<CatalogPage> {
                           final lastAccessedWines =
                               wineManagerProvider.lastAccessedWines;
                           return LastAccessedWinesList(
-                              lastAccessedWines: lastAccessedWines);
+                            lastAccessedWines: lastAccessedWines,
+                          );
                         },
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: const Text(
-                            'Seu catálogo',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                            ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: const Text(
+                          'Seu catálogo',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Expanded(
-                          child: GridView.builder(
-                            padding: EdgeInsets.zero,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 110,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            itemCount: wines.length,
-                            itemBuilder: (context, index) {
-                              final wine = wines[index];
-                              return StandardWineItem(
-                                wine: wine,
-                                onTap: (wine) {
-                                  _addLastAccessedWine(wine);
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/wineDetails',
-                                    arguments: wine,
-                                  );
-                                },
+                      ),
+                      GridView.builder(
+                        shrinkWrap: true, // Added this line
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 110,
+                        ),
+                        scrollDirection: Axis.vertical,
+                        itemCount: wines.length,
+                        itemBuilder: (context, index) {
+                          final wine = wines[index];
+                          return StandardWineItem(
+                            wine: wine,
+                            onTap: (wine) {
+                              _addLastAccessedWine(wine);
+                              Navigator.pushNamed(
+                                context,
+                                '/wineDetails',
+                                arguments: wine,
                               );
                             },
-                          ),
-                        ),
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
-              );
-            }
-            return const Text("A");
-          }),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color.fromARGB(255, 106, 16, 59),
-          iconSize: 30,
-          selectedIconTheme: const IconThemeData(color: Colors.white),
-          selectedItemColor: Colors.white,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-          unselectedIconTheme: const IconThemeData(
-            color: Color.fromARGB(255, 126, 126, 126),
-          ),
-          unselectedItemColor: const Color.fromARGB(255, 126, 126, 126),
-          currentIndex: paginaAtual,
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.wine_bar), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: ''),
-          ],
-          onTap: (pagina) {
-            pc.animateToPage(
-              pagina,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.ease,
+              ),
             );
-          }),
+          }
+          return const Text("A");
+        },
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: paginaAtual,
+        onTap: (pagina) {
+          setPaginaAtual(pagina);
+        },
+      ),
     );
   }
 
@@ -173,5 +154,17 @@ class _CatalogPage extends State<CatalogPage> {
     setState(() {
       paginaAtual = pagina;
     });
+
+    switch (pagina) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/management');
+        break;
+    }
   }
 }

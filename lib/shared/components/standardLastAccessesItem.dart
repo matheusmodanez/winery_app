@@ -29,34 +29,33 @@ class LastAccessedWinesList extends StatelessWidget {
               children: [
                 Container(
                   width: 100,
-                  height:
-                      100, // Set the same height as width to make it a circle
+                  height: 100,
                   margin: const EdgeInsets.all(5),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 196, 26, 26),
+                    color: const Color.fromARGB(255, 179, 150, 150),
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
                 Positioned.fill(
                   child: Image(
                     image: AssetImage(wine.bottle),
-                    fit: BoxFit.contain, // Adjust the fit to your preference
+                    fit: BoxFit.contain,
                   ),
                 ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      wine.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned.fill(
+                //   child: Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: Text(
+                //       wine.name,
+                //       textAlign: TextAlign.center,
+                //       style: const TextStyle(
+                //         color: Color.fromARGB(255, 106, 16, 59),
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           );
