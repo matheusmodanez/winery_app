@@ -1,5 +1,6 @@
 import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:Winery/features/Management/managementPage.dart';
+import 'package:Winery/features/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,8 +37,9 @@ class MyApp extends StatelessWidget {
       title: 'Winery',
       debugShowCheckedModeBanner: false,
       // theme: lightTheme,
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
+        '/login': (context) => IntroPage(),
         '/': (context) => const CatalogPage(),
         '/management': (context) => const ManagementPage(),
       },

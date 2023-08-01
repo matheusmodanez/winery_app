@@ -20,16 +20,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
         children: [
           Container(
             height: kBottomNavigationBarHeight,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 65, 6, 24),
-                  Color.fromARGB(255, 78, 6, 41),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+            decoration:
+                const BoxDecoration(color: Color.fromARGB(255, 47, 0, 22)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

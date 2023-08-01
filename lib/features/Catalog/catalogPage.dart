@@ -1,21 +1,21 @@
-import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:Winery/domain/entities/wine.dart';
-import 'package:Winery/features/Catalog/catalogRepository.dart';
-import 'package:Winery/shared/components/standardWineItem.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/components/customBottomNavigationBar.dart';
 import '../../shared/components/standardLastAccessesItem.dart';
+import '../../shared/components/standardWineItem.dart';
+import 'package:Winery/domain/entities/wine.dart';
+import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/features/Catalog/wineManageProvider.dart';
 
 class CatalogPage extends StatefulWidget {
   const CatalogPage({Key? key}) : super(key: key);
 
   @override
-  State<CatalogPage> createState() => _CatalogPage();
+  State<CatalogPage> createState() => _CatalogPageState();
 }
 
-class _CatalogPage extends State<CatalogPage> {
+class _CatalogPageState extends State<CatalogPage> {
   final _catalogRepository = CatalogRepository();
   late Future<List<Wine>> _futureWineList;
   int paginaAtual = 0;
@@ -23,12 +23,12 @@ class _CatalogPage extends State<CatalogPage> {
 
   @override
   void initState() {
-    listWines();
     super.initState();
     pc = PageController(initialPage: paginaAtual);
+    _loadWines();
   }
 
-  void listWines() {
+  void _loadWines() {
     _futureWineList = _catalogRepository.listWines();
   }
 
@@ -50,90 +50,26 @@ class _CatalogPage extends State<CatalogPage> {
             );
           } else if (snapshot.hasError) {
             return const Text('Error fetching data');
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
+          } else if (snapshot.connectionState == ConnectionState.done) {
             final wines = snapshot.data ?? [];
             return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 65, 0, 20),
-                    child: const Text(
+                  const SizedBox(height: 65),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
                       'Winery',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w500,
+                        height: 2,
                       ),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: const Text(
-                          'Recentemente acessado',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Consumer<WineManageProvider>(
-                        builder: (context, wineManagerProvider, _) {
-                          final lastAccessedWines =
-                              wineManagerProvider.lastAccessedWines;
-                          return LastAccessedWinesList(
-                            lastAccessedWines: lastAccessedWines,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: const Text(
-                          'Seu catálogo',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      GridView.builder(
-                        shrinkWrap: true, // Added this line
-                        padding: EdgeInsets.zero,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 110,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        itemCount: wines.length,
-                        itemBuilder: (context, index) {
-                          final wine = wines[index];
-                          return StandardWineItem(
-                            wine: wine,
-                            onTap: (wine) {
-                              _addLastAccessedWine(wine);
-                              Navigator.pushNamed(
-                                context,
-                                '/wineDetails',
-                                arguments: wine,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                  _buildLastAccessedWines(),
+                  _buildCatalogWines(wines),
                 ],
               ),
             );
@@ -143,14 +79,82 @@ class _CatalogPage extends State<CatalogPage> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: paginaAtual,
-        onTap: (pagina) {
-          setPaginaAtual(pagina);
-        },
+        onTap: setPaginaAtual,
       ),
     );
   }
 
-  setPaginaAtual(pagina) {
+  Widget _buildLastAccessedWines() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Recentemente acessado',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Consumer<WineManageProvider>(
+            builder: (context, wineManagerProvider, _) {
+              final lastAccessedWines = wineManagerProvider.lastAccessedWines;
+              return LastAccessedWinesList(
+                lastAccessedWines: lastAccessedWines,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCatalogWines(List<Wine> wines) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Seu catálogo',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: GridView.builder(
+              padding: EdgeInsets.zero,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+              ),
+              scrollDirection: Axis.vertical,
+              itemCount: wines.length,
+              itemBuilder: (context, index) {
+                final wine = wines[index];
+                return StandardWineItem(
+                  wine: wine,
+                  onTap: (wine) {
+                    _addLastAccessedWine(wine);
+                    Navigator.pushNamed(
+                      context,
+                      '/wineDetails',
+                      arguments: wine,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void setPaginaAtual(int pagina) {
     setState(() {
       paginaAtual = pagina;
     });

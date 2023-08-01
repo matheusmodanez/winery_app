@@ -24,20 +24,30 @@ class _ManagementPageState extends State<ManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 55, 5, 0),
+        padding: const EdgeInsets.fromLTRB(5, 75, 5, 0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Align(
-              alignment: AlignmentDirectional(0, 0),
-              child: CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('assets/papa.png'),
+            Align(
+              alignment: const AlignmentDirectional(0, 0),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color:
+                        const Color.fromARGB(255, 197, 27, 78).withOpacity(1),
+                    width: 6,
+                  ),
+                ),
+                child: const CircleAvatar(
+                  radius: 100,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: AssetImage('assets/papa.png'),
+                ),
               ),
             ),
-            const SizedBox(
-                height: 10), // Adjust the spacing between image and text
+            const SizedBox(height: 25),
             const Text(
               'Luigi',
               style: TextStyle(

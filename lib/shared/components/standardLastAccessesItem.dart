@@ -12,7 +12,7 @@ class LastAccessedWinesList extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         scrollDirection: Axis.horizontal,
         itemCount: lastAccessedWines.length,
         itemBuilder: (context, index) {
@@ -34,7 +34,7 @@ class LastAccessedWinesList extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 179, 150, 150),
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 Positioned.fill(
