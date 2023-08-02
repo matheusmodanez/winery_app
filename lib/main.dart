@@ -1,3 +1,4 @@
+import 'package:Winery/features/3DModels/winery3D.dart';
 import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:Winery/features/Management/managementPage.dart';
 import 'package:Winery/features/loginPage.dart';
@@ -37,10 +38,14 @@ class MyApp extends StatelessWidget {
       title: 'Winery',
       debugShowCheckedModeBanner: false,
       // theme: lightTheme,
+      theme: ThemeData(
+        fontFamily: 'MuseoModerno',
+      ),
       initialRoute: '/login',
       routes: {
         '/login': (context) => IntroPage(),
         '/': (context) => const CatalogPage(),
+        '/wineryModel': (context) => const WineryModel(),
         '/management': (context) => const ManagementPage(),
       },
       onGenerateRoute: (settings) {

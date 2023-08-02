@@ -110,7 +110,7 @@ class _ManagementPageState extends State<ManagementPage> {
         Navigator.pushNamed(context, '/');
         break;
       case 1:
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamed(context, '/wineryModel');
         break;
       case 2:
         Navigator.pushNamed(context, '/management');
