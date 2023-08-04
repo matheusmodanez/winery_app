@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Winery',
       debugShowCheckedModeBanner: false,
-      // theme: lightTheme,
       theme: ThemeData(
         fontFamily: 'MuseoModerno',
       ),

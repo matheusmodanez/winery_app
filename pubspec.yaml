@@ -29,8 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter
-
+    sdk: flutter 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,7 +39,7 @@ dependencies:
   flutter_rating_bar: 4.0.1
   provider: ^6.0.5
   object_3d: ^0.0.1
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +66,8 @@ flutter:
   assets:
     - assets/logo.png
     - assets/logo2.png
+    - assets/logo_icon_192.png
+    - assets/logo_icon_512.png
     - assets/chateau_margaux.png
     - assets/barolo-piemont.png
     - assets/las_beatas.png

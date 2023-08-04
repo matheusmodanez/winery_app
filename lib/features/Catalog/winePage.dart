@@ -1,4 +1,5 @@
 import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -166,35 +167,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 ),
                 SizedBox(
                   width: 600,
-                  height: 100,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text('Origem',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                height: 1,
-                              )),
-                          Text(getCountryFlagEmoji(wine.origin) + wine.origin,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                                height: 2,
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 100,
+                  height: 75,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -203,16 +176,15 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Tipo de Uva',
-                            style: TextStyle(
-                                fontSize: 20,
+                          const Text('Origem',
+                              style: TextStyle(
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                height: 1),
-                          ),
-                          Text(wine.grapeType,
+                                height: 1,
+                              )),
+                          Text(getCountryFlagEmoji(wine.origin) + wine.origin,
                               style: const TextStyle(
-                                fontSize: 22,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 height: 2,
                               )),
@@ -223,7 +195,36 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 ),
                 SizedBox(
                   width: 600,
-                  height: 150,
+                  height: 75,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Tipo de Uva',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                height: 1),
+                          ),
+                          Text(wine.grapeType,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                height: 2,
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 600,
+                  height: 125,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -255,37 +256,43 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Text('Monitoramento',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                     height: 1)),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                             child: Row(
                               children: [
                                 const Text('Temperatura Ideal',
                                     style: TextStyle(
-                                        fontSize: 22,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                         height: 1)),
                                 const Icon(Icons.thermostat),
                                 Text('${wine.idealTemperature} ºC',
                                     style: const TextStyle(
-                                        fontSize: 22,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                         height: 1)),
                               ],
                             ),
-                          )
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              child: StandardButton(
+                                buttonText: 'Localizar Vinho',
+                                onPressed: () {},
+                              )),
                         ],
                       ),
                     ),

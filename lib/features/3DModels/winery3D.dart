@@ -22,9 +22,52 @@ class _WineryModelState extends State<WineryModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Object3D(
-        size: Size(375.0, 500.0),
-        path: 'assets/render02Triang.obj',
+      body: const Column(
+        children: [
+          Object3D(
+            size: Size(375.0, 500.0),
+            path: 'assets/render02Triang.obj',
+          ),
+          SizedBox(
+            height: 100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Controle da Adega',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 106, 16, 59),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Temperatura',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 106, 16, 59),
+                      ),
+                    ),
+                    Text(
+                      'Umidade',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 106, 16, 59),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: paginaAtual,

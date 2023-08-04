@@ -66,7 +66,7 @@ class StandardWineItem extends StatelessWidget {
               Text(
                 wine.name,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),
