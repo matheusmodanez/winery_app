@@ -21,9 +21,12 @@ void main() async {
 
   await repository.insertInitialWines(db);
 
+  final wineManagerProvider = WineManageProvider();
+  wineManagerProvider.loadLastAccessedWines();
+
   runApp(
     ChangeNotifierProvider(
-      create: (context) => WineManageProvider(),
+      create: (context) => wineManagerProvider,
       child: const MyApp(),
     ),
   );

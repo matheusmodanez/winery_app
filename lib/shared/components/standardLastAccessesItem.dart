@@ -12,7 +12,6 @@ class LastAccessedWinesList extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
         scrollDirection: Axis.horizontal,
         itemCount: lastAccessedWines.length,
         itemBuilder: (context, index) {

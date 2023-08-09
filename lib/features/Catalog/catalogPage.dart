@@ -33,8 +33,7 @@ class _CatalogPageState extends State<CatalogPage> {
   }
 
   void _addLastAccessedWine(Wine wine) {
-    final wineManagerProvider =
-        Provider.of<WineManageProvider>(context, listen: false);
+    final wineManagerProvider = context.read<WineManageProvider>();
     wineManagerProvider.addLastAccessedWine(wine);
   }
 

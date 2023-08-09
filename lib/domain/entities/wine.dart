@@ -19,4 +19,32 @@ class Wine {
       required this.rpClassification,
       required this.clientClassification,
       required this.bottle});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'origin': origin,
+      'grapeType': grapeType,
+      'notes': notes,
+      'idealTemperature': idealTemperature,
+      'rpClassification': rpClassification,
+      'clientClassification': clientClassification,
+      'bottle': bottle,
+    };
+  }
+
+  factory Wine.fromJson(Map<String, dynamic> json) {
+    return Wine(
+      id: json['id'],
+      name: json['name'],
+      origin: json['origin'],
+      grapeType: json['grapeType'],
+      notes: json['notes'],
+      idealTemperature: json['idealTemperature'],
+      rpClassification: json['rpClassification'],
+      clientClassification: json['clientClassification'],
+      bottle: json['bottle'],
+    );
+  }
 }
