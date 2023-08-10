@@ -1,13 +1,15 @@
-import 'package:Winery/features/Catalog/catalogRepository.dart';
-import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
+import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:Winery/shared/components/standardGlassCards.dart';
+import 'package:Winery/shared/components/standartButton.dart';
 
 class WineDetailsPage extends StatefulWidget {
   final Wine? wine;
 
   const WineDetailsPage({Key? key, required this.wine}) : super(key: key);
+
   @override
   State<WineDetailsPage> createState() => _WineDetailsPage();
 }
@@ -44,24 +46,17 @@ class _WineDetailsPage extends State<WineDetailsPage> {
           wine.notes.split('/').map((term) => term.trim()).toList();
 
       List<Widget> textWidgets = terms
-          .map((term) => Padding(
-                padding: const EdgeInsets.all(4),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 206, 206, 206),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    term,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ))
+          .map(
+            (term) => GlassCard(
+                start: 0.1,
+                end: 0.1,
+                width: 85,
+                height: 60,
+                text1: term,
+                text2: '',
+                text1Size: 12,
+                text2Size: 10),
+          )
           .toList();
 
       String getCountryFlagEmoji(String country) {
@@ -85,221 +80,170 @@ class _WineDetailsPage extends State<WineDetailsPage> {
 
       return Scaffold(
         body: SingleChildScrollView(
-          child: SizedBox(
-            width: 600,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    const ClipRRect(
-                      child: Image(
-                        image: AssetImage('assets/cover.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          Text(
-                            wine.name,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text('Sua Classificação',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                height: 2)),
-                        RatingBar.builder(
-                          onRatingUpdate: (newValue) {
-                            updateClientClassification(wine.id, newValue);
-                          },
-                          itemBuilder: (context, index) {
-                            return index < wine.clientClassification
-                                ? const Icon(
-                                    Icons.star_rounded,
-                                    color: Colors.amber,
-                                  )
-                                : const Icon(
-                                    Icons.star_rounded,
-                                    color: Color.fromARGB(255, 202, 202, 202),
-                                  );
-                          },
-                          direction: Axis.horizontal,
-                          initialRating: classification,
-                          unratedColor:
-                              const Color.fromARGB(255, 202, 202, 202),
-                          itemCount: 5,
-                          itemSize: 40,
-                          glowColor: Colors.amber[600],
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 550,
+                    width: 600,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color.fromARGB(255, 197, 27, 78)
+                                .withOpacity(1),
+                            const Color.fromARGB(255, 106, 16, 59)
+                                .withOpacity(1),
+                          ],
+                          begin: AlignmentDirectional.topCenter,
+                          end: AlignmentDirectional.center,
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 75,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text('Origem',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                height: 1,
-                              )),
-                          Text(getCountryFlagEmoji(wine.origin) + wine.origin,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                height: 2,
-                              )),
-                        ],
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 75,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Tipo de Uva',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                height: 1),
-                          ),
-                          Text(wine.grapeType,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                height: 2,
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 125,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Notas',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                height: 1),
-                          ),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 2,
-                            children: textWidgets,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 600,
-                  height: 150,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                            child: Text('Monitoramento',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                            child: Row(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 35, 15, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
                               children: [
-                                const Text('Temperatura Ideal',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1)),
-                                const Icon(Icons.thermostat),
-                                Text('${wine.idealTemperature} ºC',
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1)),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Text(
+                                  wine.name,
+                                  style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                              child: StandardButton(
-                                buttonText: 'Localizar Vinho',
-                                onPressed: () {},
-                              )),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+                              child: RatingBar.builder(
+                                onRatingUpdate: (newValue) {
+                                  updateClientClassification(wine.id, newValue);
+                                },
+                                itemBuilder: (context, index) {
+                                  return index < wine.clientClassification
+                                      ? const Icon(
+                                          Icons.star_rounded,
+                                          color: Colors.amber,
+                                        )
+                                      : const Icon(
+                                          Icons.star_rounded,
+                                          color: Color.fromARGB(
+                                              255, 202, 202, 202),
+                                        );
+                                },
+                                direction: Axis.horizontal,
+                                initialRating: classification,
+                                unratedColor:
+                                    const Color.fromARGB(255, 202, 202, 202),
+                                itemCount: 5,
+                                itemSize: 40,
+                                glowColor: Colors.amber[600],
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Column(
+                                  children: [
+                                    GlassCard(
+                                        start: 0.1,
+                                        end: 0.1,
+                                        width: 115,
+                                        height: 75,
+                                        text1: wine.grapeType,
+                                        text2: "Tipo",
+                                        text1Size: 16,
+                                        text2Size: 14),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    GlassCard(
+                                        start: 0.1,
+                                        end: 0.1,
+                                        width: 115,
+                                        height: 75,
+                                        text1:
+                                            "${getCountryFlagEmoji(wine.origin)} ${wine.origin}",
+                                        text2: "Origem",
+                                        text1Size: 16,
+                                        text2Size: 14),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    GlassCard(
+                                        start: 0.1,
+                                        end: 0.1,
+                                        width: 115,
+                                        height: 75,
+                                        text1: '${wine.idealTemperature} ºC',
+                                        text2: "Temperatura \n Ideal",
+                                        text1Size: 16,
+                                        text2Size: 14),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  height: 450,
+                                  child: Image(
+                                    image: AssetImage(wine.bottle),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    const Text("Notas",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 177, 177, 177),
+                                          fontFamily: 'Poppins',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        )),
+                                    ...textWidgets
+                                        .map((widget) => Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: widget,
+                                            ))
+                                        .toList(),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 50, 0, 15),
+                child: SizedBox(
+                  child: StandardButton(
+                    buttonText: 'Localizar Vinho',
+                    onPressed: () {},
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );

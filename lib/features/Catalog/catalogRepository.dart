@@ -57,6 +57,30 @@ class CatalogRepository {
         "clientClassification": 3.8,
         "bottle": 'assets/covela.png',
       });
+
+      await db.insert("wine", {
+        "id": 0005,
+        "name": "Sancerre",
+        "origin": "Loire Valley, França",
+        "grapeType": "Sauvignon Blanc",
+        "notes": "Cítrico / Floral / Mineral",
+        "idealTemperature": 10.0,
+        "rpClassification": 4.2,
+        "clientClassification": 4.5,
+        "bottle": 'assets/sancerre.png',
+      });
+
+      await db.insert("wine", {
+        "id": 0006,
+        "name": "Brunello di Montalcino",
+        "origin": "Toscana, Itália",
+        "grapeType": "Sangiovese",
+        "notes": "Cereja / Terra / Ervas / Taninos Elegantes",
+        "idealTemperature": 18.0,
+        "rpClassification": 4.5,
+        "clientClassification": 5,
+        "bottle": 'assets/brunello-di-montalcino.png',
+      });
     }
   }
 

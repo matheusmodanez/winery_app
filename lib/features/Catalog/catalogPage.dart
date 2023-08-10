@@ -55,14 +55,14 @@ class _CatalogPageState extends State<CatalogPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 65),
+                  const SizedBox(height: 50),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       'Winery',
                       style: TextStyle(
                         fontSize: 32,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         height: 2,
                       ),
                     ),
@@ -111,7 +111,7 @@ class _CatalogPageState extends State<CatalogPage> {
 
   Widget _buildCatalogWines(List<Wine> wines) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -128,7 +128,7 @@ class _CatalogPageState extends State<CatalogPage> {
               padding: EdgeInsets.zero,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
+                mainAxisSpacing: 4,
               ),
               scrollDirection: Axis.vertical,
               itemCount: wines.length,
@@ -138,11 +138,6 @@ class _CatalogPageState extends State<CatalogPage> {
                   wine: wine,
                   onTap: (wine) {
                     _addLastAccessedWine(wine);
-                    Navigator.pushNamed(
-                      context,
-                      '/wineDetails',
-                      arguments: wine,
-                    );
                   },
                 );
               },

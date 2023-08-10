@@ -34,6 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  shared_preferences: ^2.0.9
   sqflite: ^2.0.3+1
   path: ^1.8.1
   flutter_rating_bar: 4.0.1
@@ -64,14 +65,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo.png
-    - assets/logo2.png
-    - assets/logo_icon_192.png
-    - assets/logo_icon_512.png
+    - assets/logos/logo.png
+    - assets/logos/logo2.png
+    - assets/logos/logo_icon_192.png
+    - assets/logos/logo_icon_512.png
     - assets/chateau_margaux.png
     - assets/barolo-piemont.png
     - assets/las_beatas.png
     - assets/covela.png
+    - assets/sancerre.png
+    - assets/brunello-di-montalcino.png
     - assets/cover.jpg
     - assets/papa.png
     - assets/render01.obj
@@ -79,6 +82,7 @@ flutter:
     - assets/render01Triang.obj
     - assets/render02Triang.obj
     - assets/file.obj
+    - assets/mtlTest.mtl
 
   fonts:
       - family: MuseoModerno

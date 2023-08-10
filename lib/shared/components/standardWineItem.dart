@@ -51,20 +51,21 @@ class StandardWineItem extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: SizedBox(
           width: 150,
-          height: 125,
+          height: 150,
           child: Column(
             children: [
               SizedBox(
                 width: 150,
-                height: 85,
+                height: 75,
                 child: Image(
                   image: AssetImage(wine.bottle),
                   fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 5),
               Text(
                 wine.name,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,

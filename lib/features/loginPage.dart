@@ -20,7 +20,7 @@ class IntroPage extends StatelessWidget {
                 height: 45,
               ),
               Image.asset(
-                'assets/logo.png',
+                'assets/logos/logo.png',
                 fit: BoxFit.cover,
                 height: 250,
               ),
