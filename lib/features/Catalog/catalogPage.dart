@@ -55,7 +55,7 @@ class _CatalogPageState extends State<CatalogPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
@@ -85,7 +85,7 @@ class _CatalogPageState extends State<CatalogPage> {
 
   Widget _buildLastAccessedWines() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

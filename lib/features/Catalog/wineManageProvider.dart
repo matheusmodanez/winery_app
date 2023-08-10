@@ -40,4 +40,15 @@ class WineManageProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void updateWineRating(int wineId, double newRating) async {
+    final wineIndex = _lastAccessedWines.indexWhere((w) => w.id == wineId);
+    if (wineIndex != -1) {
+      _lastAccessedWines[wineIndex].clientClassification = newRating;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('wineRating ',
+          jsonEncode(_lastAccessedWines.map((wine) => wine.toJson()).toList()));
+      notifyListeners();
+    }
+  }
 }

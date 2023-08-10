@@ -1,9 +1,11 @@
+import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:Winery/shared/components/standardGlassCards.dart';
 import 'package:Winery/shared/components/standartButton.dart';
+import 'package:provider/provider.dart';
 
 class WineDetailsPage extends StatefulWidget {
   final Wine? wine;
@@ -23,6 +25,13 @@ class _WineDetailsPage extends State<WineDetailsPage> {
   void initState() {
     super.initState();
     pc = PageController(initialPage: paginaAtual);
+  }
+
+  void updateWineRating(double newRating) {
+    final wineId = widget.wine?.id;
+    if (wineId != null) {
+      context.read<WineManageProvider>().updateWineRating(wineId, newRating);
+    }
   }
 
   void updateClientClassification(int? id, double newClassification) {
@@ -85,7 +94,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
               Stack(
                 children: [
                   SizedBox(
-                    height: 550,
+                    height: 500,
                     width: 600,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -118,20 +127,25 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                     Navigator.pop(context);
                                   },
                                 ),
-                                Text(
-                                  wine.name,
-                                  style: const TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                Wrap(
+                                  children: [
+                                    Text(
+                                      wine.name,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                               child: RatingBar.builder(
                                 onRatingUpdate: (newValue) {
+                                  updateWineRating(newValue);
                                   updateClientClassification(wine.id, newValue);
                                 },
                                 itemBuilder: (context, index) {
@@ -156,12 +170,15 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                               ),
                             ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Column(
                                   children: [
+                                    const SizedBox(
+                                      height: 75,
+                                    ),
                                     GlassCard(
                                         start: 0.1,
                                         end: 0.1,
@@ -182,8 +199,8 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                         text1:
                                             "${getCountryFlagEmoji(wine.origin)} ${wine.origin}",
                                         text2: "Origem",
-                                        text1Size: 16,
-                                        text2Size: 14),
+                                        text1Size: 14,
+                                        text2Size: 12),
                                     const SizedBox(
                                       height: 15,
                                     ),
@@ -201,13 +218,19 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                 SizedBox(
                                   width: 100,
                                   height: 450,
-                                  child: Image(
-                                    image: AssetImage(wine.bottle),
-                                    fit: BoxFit.contain,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                                    child: Image(
+                                      image: AssetImage(wine.bottle),
+                                    ),
                                   ),
                                 ),
                                 Column(
                                   children: [
+                                    const SizedBox(
+                                      height: 55,
+                                    ),
                                     const Text("Notas",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
@@ -235,7 +258,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 15),
+                padding: const EdgeInsets.fromLTRB(0, 125, 0, 15),
                 child: SizedBox(
                   child: StandardButton(
                     buttonText: 'Localizar Vinho',
