@@ -20,6 +20,7 @@ class CatalogRepository {
         "rpClassification": 4.7,
         "clientClassification": 4.2,
         "bottle": 'assets/chateau_margaux.png',
+        "quantity": 1,
       });
 
       await db.insert("wine", {
@@ -32,6 +33,7 @@ class CatalogRepository {
         "rpClassification": 3.8,
         "clientClassification": 4,
         "bottle": 'assets/barolo-piemont.png',
+        "quantity": 1,
       });
 
       await db.insert("wine", {
@@ -44,6 +46,7 @@ class CatalogRepository {
         "rpClassification": 4.4,
         "clientClassification": 4,
         "bottle": 'assets/las_beatas.png',
+        "quantity": 1,
       });
 
       await db.insert("wine", {
@@ -56,6 +59,7 @@ class CatalogRepository {
         "rpClassification": 4.2,
         "clientClassification": 3.8,
         "bottle": 'assets/covela.png',
+        "quantity": 1,
       });
 
       await db.insert("wine", {
@@ -68,6 +72,7 @@ class CatalogRepository {
         "rpClassification": 4.2,
         "clientClassification": 4.5,
         "bottle": 'assets/sancerre.png',
+        "quantity": 1,
       });
 
       await db.insert("wine", {
@@ -80,6 +85,7 @@ class CatalogRepository {
         "rpClassification": 4.5,
         "clientClassification": 5,
         "bottle": 'assets/brunello-di-montalcino.png',
+        "quantity": 1,
       });
     }
   }
@@ -98,27 +104,44 @@ class CatalogRepository {
      wine.idealTemperature,
      wine.rpClassification,
      wine.clientClassification,
-     wine.bottle
+     wine.bottle,
+     wine.quantity
     FROM wine
 ''');
       return rows
           .map(
             (row) => Wine(
-              id: row['id'],
-              name: row['name'],
-              origin: row['origin'],
-              grapeType: row['grapeType'],
-              notes: row['notes'],
-              idealTemperature: row['idealTemperature'],
-              rpClassification: row['rpClassification'],
-              clientClassification: row['clientClassification'],
-              bottle: row['bottle'],
-            ),
+                id: row['id'],
+                name: row['name'],
+                origin: row['origin'],
+                grapeType: row['grapeType'],
+                notes: row['notes'],
+                idealTemperature: row['idealTemperature'],
+                rpClassification: row['rpClassification'],
+                clientClassification: row['clientClassification'],
+                bottle: row['bottle'],
+                quantity: row['quantity']),
           )
           .toList();
     } catch (e) {
       print("Error fetching wines: $e");
-      return []; // Return an empty list to avoid rendering errors.
+      return [];
+    }
+  }
+
+  Future<int> calculateTotalBottles() async {
+    try {
+      final List<Wine> wines = await listWines();
+      int totalBottles = 0;
+
+      for (var wine in wines) {
+        totalBottles += wine.quantity ?? 0;
+      }
+
+      return totalBottles;
+    } catch (e) {
+      print("Error calculating total bottles: $e");
+      return 0;
     }
   }
 

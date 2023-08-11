@@ -32,7 +32,8 @@ class DatabaseManager {
       idealTemperature DOUBLE,
       rpClassification DOUBLE,
       clientClassification DOUBLE,
-      bottle TEXT
+      bottle TEXT,
+      quantity INTEGER
     );
   ''';
 }

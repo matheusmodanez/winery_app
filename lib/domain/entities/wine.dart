@@ -8,6 +8,7 @@ class Wine {
   double rpClassification;
   double clientClassification;
   String bottle;
+  int quantity;
 
   Wine(
       {this.id,
@@ -18,7 +19,8 @@ class Wine {
       required this.idealTemperature,
       required this.rpClassification,
       required this.clientClassification,
-      required this.bottle});
+      required this.bottle,
+      required this.quantity});
 
   Map<String, dynamic> toJson() {
     return {
@@ -31,6 +33,7 @@ class Wine {
       'rpClassification': rpClassification,
       'clientClassification': clientClassification,
       'bottle': bottle,
+      'quantity': quantity,
     };
   }
 
@@ -45,6 +48,7 @@ class Wine {
       rpClassification: json['rpClassification'],
       clientClassification: json['clientClassification'],
       bottle: json['bottle'],
+      quantity: json['quantity'],
     );
   }
 }

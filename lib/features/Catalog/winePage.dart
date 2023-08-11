@@ -258,7 +258,33 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 125, 0, 15),
+                padding: const EdgeInsets.fromLTRB(15, 100, 15, 0),
+                child: SizedBox(
+                    child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text('Quantidade de garrafas: ',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 31, 31, 31),
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        )),
+                    Text('${wine.quantity}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 31, 31, 31),
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ],
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 35, 0, 15),
                 child: SizedBox(
                   child: StandardButton(
                     buttonText: 'Localizar Vinho',

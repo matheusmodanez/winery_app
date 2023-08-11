@@ -1,3 +1,4 @@
+import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,23 @@ class ManagementPage extends StatefulWidget {
 }
 
 class _ManagementPageState extends State<ManagementPage> {
+  final _catalogRepository = CatalogRepository();
   int paginaAtual = 2;
+  late int _totalBottles;
   late PageController pc;
 
   @override
   void initState() {
     super.initState();
+    _calculateTotalBottles();
     pc = PageController(initialPage: paginaAtual);
+  }
+
+  Future<void> _calculateTotalBottles() async {
+    final total = await _catalogRepository.calculateTotalBottles();
+    setState(() {
+      _totalBottles = total; // Atualize a variável após o cálculo
+    });
   }
 
   @override
@@ -56,26 +67,28 @@ class _ManagementPageState extends State<ManagementPage> {
                 height: 1,
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 45, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 45, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Número de garrafas',
+                    const Text('Número de garrafas',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           height: 1,
                         )),
-                    Text('1050',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                          height: 2,
-                        )),
+                    Text(
+                      '$_totalBottles',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                        height: 2,
+                      ),
+                    ),
                   ],
                 ),
               ),
