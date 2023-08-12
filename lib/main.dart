@@ -1,6 +1,7 @@
 import 'package:Winery/features/3DModels/winery3D.dart';
 import 'package:Winery/features/Catalog/wineManageProvider.dart';
 import 'package:Winery/features/Management/managementPage.dart';
+import 'package:Winery/features/Management/profileManagement/profileRepository.dart';
 import 'package:Winery/features/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +18,10 @@ void main() async {
 
   final Database db = await DatabaseManager.instance.database;
 
-  final repository = CatalogRepository();
-
-  await repository.insertInitialWines(db);
+  final catalogRepository = CatalogRepository();
+  final profileRepository = ProfileRepository();
+  await catalogRepository.insertInitialWines(db);
+  await profileRepository.initialProfiles(db);
 
   final wineManagerProvider = WineManageProvider();
   wineManagerProvider.loadLastAccessedWines();

@@ -1,4 +1,6 @@
+import 'package:Winery/domain/entities/profile.dart';
 import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/features/Management/profileManagement/profileRepository.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +15,17 @@ class ManagementPage extends StatefulWidget {
 
 class _ManagementPageState extends State<ManagementPage> {
   final _catalogRepository = CatalogRepository();
-  int paginaAtual = 2;
+  final _profileRepository = ProfileRepository();
+  late Future<Profile> profile;
+  late Profile loadedProfile;
   late int _totalBottles;
   late PageController pc;
+  int paginaAtual = 2;
 
   @override
   void initState() {
     super.initState();
+    loadProfileInfo();
     _calculateTotalBottles();
     pc = PageController(initialPage: paginaAtual);
   }
@@ -27,8 +33,13 @@ class _ManagementPageState extends State<ManagementPage> {
   Future<void> _calculateTotalBottles() async {
     final total = await _catalogRepository.calculateTotalBottles();
     setState(() {
-      _totalBottles = total; // Atualize a variável após o cálculo
+      _totalBottles = total;
     });
+  }
+
+  void loadProfileInfo() async {
+    profile = _profileRepository.loadProfile(0001);
+    loadedProfile = await profile;
   }
 
   @override
@@ -51,17 +62,17 @@ class _ManagementPageState extends State<ManagementPage> {
                     width: 6,
                   ),
                 ),
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage('assets/papa.png'),
+                  backgroundImage: AssetImage(loadedProfile.profilePicture),
                 ),
               ),
             ),
             const SizedBox(height: 25),
-            const Text(
-              'Luigi',
-              style: TextStyle(
+            Text(
+              loadedProfile.name,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
                 height: 1,
@@ -82,7 +93,7 @@ class _ManagementPageState extends State<ManagementPage> {
                           height: 1,
                         )),
                     Text(
-                      '$_totalBottles',
+                      '${loadedProfile.quantity}',
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,

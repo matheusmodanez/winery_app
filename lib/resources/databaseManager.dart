@@ -20,6 +20,8 @@ class DatabaseManager {
 
   _onCreate(Database db, int version) async {
     await db.execute(_wine);
+    await db.execute(_wineryCatalog);
+    await db.execute(_profile);
   }
 
   String get _wine => '''
@@ -33,6 +35,30 @@ class DatabaseManager {
       rpClassification DOUBLE,
       clientClassification DOUBLE,
       bottle TEXT,
+      quantity INTEGER
+    );
+  ''';
+
+  String get _wineryCatalog => '''
+    CREATE TABLE IF NOT EXISTS wineryCatalog (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      origin TEXT,
+      grapeType TEXT,
+      notes TEXT,
+      idealTemperature DOUBLE,
+      rpClassification DOUBLE,
+      bottle TEXT
+    );
+  ''';
+
+  String get _profile => '''
+    CREATE TABLE IF NOT EXISTS profile (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT, 
+      profilePicture TEXT, 
+      serviceType TEXT, 
+      wineryCapacity INTEGER, 
       quantity INTEGER
     );
   ''';
