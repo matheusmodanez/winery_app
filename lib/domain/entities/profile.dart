@@ -4,7 +4,7 @@ class Profile {
   String profilePicture;
   String serviceType;
   int? wineryCapacity;
-  int quantity;
+  int? catalogId;
 
   Profile({
     this.id,
@@ -12,6 +12,27 @@ class Profile {
     required this.profilePicture,
     required this.serviceType,
     required this.wineryCapacity,
-    required this.quantity,
+    this.catalogId,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'profilePicture': profilePicture,
+      'serviceType': serviceType,
+      'wineryCapacity': wineryCapacity,
+      'catalogId': catalogId,
+    };
+  }
+
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
+      name: json['name'],
+      profilePicture: json['profilePicture'],
+      serviceType: json['serviceType'],
+      wineryCapacity: json['wineryCapacity'],
+      catalogId: json['catalogId'],
+    );
+  }
 }

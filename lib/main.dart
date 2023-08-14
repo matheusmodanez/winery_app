@@ -1,14 +1,18 @@
 import 'package:Winery/features/3DModels/winery3D.dart';
-import 'package:Winery/features/Catalog/wineManageProvider.dart';
-import 'package:Winery/features/Management/managementPage.dart';
-import 'package:Winery/features/Management/profileManagement/profileRepository.dart';
+import 'package:Winery/features/catalog/catalogProvider.dart';
+import 'package:Winery/features/management/catalogManagementPage.dart';
+import 'package:Winery/features/management/managementPage.dart';
+import 'package:Winery/features/profile/profileRepository.dart';
 import 'package:Winery/features/loginPage.dart';
+import 'package:Winery/features/wine/newWine.dart';
+import 'package:Winery/features/wine/wineManageProvider.dart';
+import 'package:Winery/features/wine/winePage.dart';
+import 'package:Winery/features/wine/wineryCatalogPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:Winery/features/Catalog/catalogPage.dart';
-import 'package:Winery/features/Catalog/catalogRepository.dart';
-import 'package:Winery/features/Catalog/winePage.dart';
+import 'package:Winery/features/catalog/catalogPage.dart';
+import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:Winery/resources/databaseManager.dart';
 
 import 'domain/entities/wine.dart';
@@ -19,16 +23,25 @@ void main() async {
   final Database db = await DatabaseManager.instance.database;
 
   final catalogRepository = CatalogRepository();
+  await catalogRepository.initializeClientCatalog(db);
+
   final profileRepository = ProfileRepository();
-  await catalogRepository.insertInitialWines(db);
   await profileRepository.initialProfiles(db);
 
   final wineManagerProvider = WineManageProvider();
   wineManagerProvider.loadLastAccessedWines();
 
+  final catalog = await catalogRepository.getCatalog(0001);
+  final totalBottles =
+      await catalogRepository.calculateTotalBottlesInCatalog(catalog!);
+  final catalogProvider = CatalogProvider(catalog, totalBottles);
+
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => wineManagerProvider,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => wineManagerProvider),
+        ChangeNotifierProvider(create: (context) => catalogProvider),
+      ],
       child: const MyApp(),
     ),
   );
@@ -51,6 +64,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const CatalogPage(),
         '/wineryModel': (context) => const WineryModel(),
         '/management': (context) => const ManagementPage(),
+        '/catalogManagement': (context) => const CatalogManagementPage(),
+        '/wineryCatalog': (context) => const WineryCatalogPage(),
+        '/newWine': (context) => NewWine(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/wineDetails') {

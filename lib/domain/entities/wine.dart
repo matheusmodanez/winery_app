@@ -5,7 +5,7 @@ class Wine {
   String grapeType;
   String notes;
   double idealTemperature;
-  double rpClassification;
+  double? rpClassification;
   double clientClassification;
   String bottle;
   int quantity;
@@ -17,7 +17,7 @@ class Wine {
       required this.grapeType,
       required this.notes,
       required this.idealTemperature,
-      required this.rpClassification,
+      this.rpClassification,
       required this.clientClassification,
       required this.bottle,
       required this.quantity});

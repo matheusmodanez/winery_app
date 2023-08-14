@@ -1,7 +1,7 @@
-import 'package:Winery/features/Catalog/wineManageProvider.dart';
+import 'package:Winery/features/wine/wineManageProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
-import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:Winery/shared/components/standardGlassCards.dart';
 import 'package:Winery/shared/components/standartButton.dart';
@@ -218,11 +218,15 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                 SizedBox(
                                   width: 100,
                                   height: 450,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                                    child: Image(
-                                      image: AssetImage(wine.bottle),
+                                  child: Visibility(
+                                    visible: wine.bottle != null &&
+                                        wine.bottle.isNotEmpty,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 50, 0, 0),
+                                      child: Image(
+                                        image: AssetImage(wine.bottle),
+                                      ),
                                     ),
                                   ),
                                 ),

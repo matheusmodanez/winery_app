@@ -1,6 +1,7 @@
+import 'package:Winery/domain/entities/wine.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CatalogRepository {
+class WineryRepository {
   late Database db;
 
   Future<void> insertInitialWines(Database db) async {
@@ -441,6 +442,43 @@ class CatalogRepository {
         "idealTemperature": 18.0,
         "bottle": '',
       });
+    }
+  }
+
+  Future<List<Wine>> listWines() async {
+    try {
+      final List<Map<String, dynamic>> rows = await db.rawQuery('''
+    SELECT
+     wine.id,
+     wine.name,
+     wine.origin,
+     wine.grapeType,
+     wine.notes,
+     wine.idealTemperature,
+     wine.rpClassification,
+     wine.clientClassification,
+     wine.bottle,
+     wine.quantity
+    FROM wineryCatalog
+''');
+      return rows
+          .map(
+            (row) => Wine(
+                id: row['id'],
+                name: row['name'],
+                origin: row['origin'],
+                grapeType: row['grapeType'],
+                notes: row['notes'],
+                idealTemperature: row['idealTemperature'],
+                rpClassification: row['rpClassification'],
+                clientClassification: row['clientClassification'],
+                bottle: row['bottle'],
+                quantity: row['quantity']),
+          )
+          .toList();
+    } catch (e) {
+      print("Error fetching wines: $e");
+      return [];
     }
   }
 }

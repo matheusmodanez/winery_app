@@ -57,9 +57,12 @@ class StandardWineItem extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 75,
-                child: Image(
-                  image: AssetImage(wine.bottle),
-                  fit: BoxFit.contain,
+                child: Visibility(
+                  visible: wine.bottle != null && wine.bottle.isNotEmpty,
+                  child: Image(
+                    image: AssetImage(wine.bottle),
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(height: 5),

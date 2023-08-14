@@ -1,53 +1,22 @@
-import 'dart:convert';
-
-import 'package:Winery/domain/entities/catalog.dart';
+import 'package:Winery/domain/entities/wine.dart';
 import 'package:Winery/features/catalog/catalogProvider.dart';
-import 'package:Winery/features/wine/wineManageProvider.dart';
+import 'package:Winery/shared/components/standardWineryManagementCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../shared/components/customBottomNavigationBar.dart';
-import '../../shared/components/standardLastAccessesItem.dart';
-import '../../shared/components/standardWineItem.dart';
-import 'package:Winery/domain/entities/wine.dart';
-
-class CatalogPage extends StatefulWidget {
-  const CatalogPage({Key? key}) : super(key: key);
+class WineryCatalogPage extends StatefulWidget {
+  const WineryCatalogPage({Key? key}) : super(key: key);
 
   @override
-  State<CatalogPage> createState() => _CatalogPageState();
+  State<WineryCatalogPage> createState() => _WineryCatalogPageState();
 }
 
-class _CatalogPageState extends State<CatalogPage> {
-  int paginaAtual = 0;
-  late PageController pc;
-
+class _WineryCatalogPageState extends State<WineryCatalogPage> {
   Future<List<Wine>>? _futureWineList;
 
   @override
   void initState() {
     super.initState();
-    pc = PageController(initialPage: paginaAtual);
-    _loadWines();
-  }
-
-  void _loadWines() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final catalogJson = prefs.getString('wineryCatalog');
-    if (catalogJson != null) {
-      final Map<String, dynamic> catalogData = jsonDecode(catalogJson);
-      final catalog = Catalog.fromJson(catalogData);
-      setState(() {
-        _futureWineList = Future.value(catalog.wines);
-      });
-    }
-  }
-
-  void _addLastAccessedWine(Wine wine) {
-    final wineManagerProvider = context.read<WineManageProvider>();
-    wineManagerProvider.addLastAccessedWine(wine);
   }
 
   @override
@@ -80,7 +49,6 @@ class _CatalogPageState extends State<CatalogPage> {
                       ),
                     ),
                   ),
-                  _buildLastAccessedWines(),
                   _buildCatalogWines(wines),
                 ],
               ),
@@ -88,36 +56,6 @@ class _CatalogPageState extends State<CatalogPage> {
           }
           return const Text("A");
         },
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: paginaAtual,
-        onTap: setPaginaAtual,
-      ),
-    );
-  }
-
-  Widget _buildLastAccessedWines() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Recentemente acessado',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Consumer<WineManageProvider>(
-            builder: (context, wineManagerProvider, _) {
-              final lastAccessedWines = wineManagerProvider.lastAccessedWines;
-              return LastAccessedWinesList(
-                lastAccessedWines: lastAccessedWines,
-              );
-            },
-          ),
-        ],
       ),
     );
   }
@@ -129,7 +67,7 @@ class _CatalogPageState extends State<CatalogPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Seu catálogo',
+            'Catálogo Winery',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w500,
@@ -150,11 +88,8 @@ class _CatalogPageState extends State<CatalogPage> {
                 itemCount: wines.length,
                 itemBuilder: (context, index) {
                   final wine = wines[index];
-                  return StandardWineItem(
+                  return StandardWineryManagementCard(
                     wine: wine,
-                    onTap: (wine) {
-                      _addLastAccessedWine(wine);
-                    },
                   );
                 },
               );
@@ -163,23 +98,5 @@ class _CatalogPageState extends State<CatalogPage> {
         ],
       ),
     );
-  }
-
-  void setPaginaAtual(int pagina) {
-    setState(() {
-      paginaAtual = pagina;
-    });
-
-    switch (pagina) {
-      case 0:
-        Navigator.pushNamed(context, '/');
-        break;
-      case 1:
-        Navigator.pushNamed(context, '/wineryModel');
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/management');
-        break;
-    }
   }
 }

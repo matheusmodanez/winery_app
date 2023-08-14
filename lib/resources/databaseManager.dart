@@ -21,6 +21,7 @@ class DatabaseManager {
   _onCreate(Database db, int version) async {
     await db.execute(_wine);
     await db.execute(_wineryCatalog);
+    await db.execute(_catalog);
     await db.execute(_profile);
   }
 
@@ -52,6 +53,13 @@ class DatabaseManager {
     );
   ''';
 
+  String get _catalog => '''
+    CREATE TABLE IF NOT EXISTS catalog (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      winesList TEXT
+    );
+  ''';
+
   String get _profile => '''
     CREATE TABLE IF NOT EXISTS profile (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,7 +67,7 @@ class DatabaseManager {
       profilePicture TEXT, 
       serviceType TEXT, 
       wineryCapacity INTEGER, 
-      quantity INTEGER
+      catalogId INTEGER
     );
   ''';
 }
