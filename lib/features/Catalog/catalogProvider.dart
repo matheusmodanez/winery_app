@@ -19,18 +19,23 @@ class CatalogProvider extends ChangeNotifier {
         wine.quantity = quantity;
       }
     });
-    _calculateTotalBottles();
+    calculateTotalBottles();
 
     notifyListeners();
   }
 
-  void _calculateTotalBottles() {
+  void calculateTotalBottles() {
     _totalBottles =
         _catalog.wines.fold<int>(0, (sum, wine) => sum + wine.quantity);
   }
 
   void addWine(Wine newWine) {
     _catalog.wines.add(newWine);
+    notifyListeners();
+  }
+
+  void removeWine(int wineId) {
+    _catalog.wines.removeWhere((wine) => wine.id == wineId);
     notifyListeners();
   }
 }

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:Winery/domain/entities/catalog.dart';
 import 'package:Winery/domain/entities/profile.dart';
-import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/features/catalog/catalogProvider.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +19,9 @@ class ManagementPage extends StatefulWidget {
 class _ManagementPageState extends State<ManagementPage> {
   late PageController pc;
   int paginaAtual = 2;
-  final _catalogRepository = CatalogRepository();
 
   late Profile loadedProfile;
   late Catalog loadedCatalog = Catalog(id: null, wines: []);
-  late int _totalBottles;
 
   @override
   void initState() {
@@ -46,18 +43,8 @@ class _ManagementPageState extends State<ManagementPage> {
         loadedProfile = Profile.fromJson(profileData);
         loadedCatalog = Catalog.fromJson(catalogData);
       });
-
-      // _calculateTotalBottles();
     }
   }
-
-  // Future<void> _calculateTotalBottles() async {
-  //   final total =
-  //       await _catalogRepository.calculateTotalBottlesInCatalog(loadedCatalog);
-  //   setState(() {
-  //     _totalBottles = total;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,13 +90,16 @@ class _ManagementPageState extends State<ManagementPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Número de garrafas:  ',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          height: 1,
-                        )),
+                    Consumer<CatalogProvider>(
+                        builder: (context, bottleCountProvider, child) {
+                      return const Text('Número de garrafas:  ',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            height: 1,
+                          ));
+                    }),
                     Consumer<CatalogProvider>(
                         builder: (context, catalogProvider, child) {
                       return Text(

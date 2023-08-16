@@ -1,6 +1,6 @@
 import 'package:Winery/domain/entities/wine.dart';
-import 'package:Winery/features/Catalog/catalogRepository.dart';
 import 'package:Winery/features/catalog/catalogProvider.dart';
+import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,12 +35,61 @@ class _StandardWineManagementCardState
     final quantity = _quantity;
     if (wineId != null) {
       context.read<CatalogProvider>().updateWineQuantity(wineId, quantity);
+      context.read<CatalogProvider>().calculateTotalBottles();
     }
   }
 
   void updateWineQuantity(int catalogId, int wineId, int quantity) {
     _catalogRepository.updateWineQuantity(
         widget.catalogId, widget.wine.id!, _quantity);
+    context
+        .read<CatalogProvider>()
+        .updateWineQuantity(widget.wine.id!, _quantity);
+  }
+
+  void _confirmRemoveWine() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'Confirme a remoção',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          content: const Text(
+            'Tem certeza que quer remover esse vinho do seu catálogo?',
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Color.fromARGB(255, 197, 27, 78)),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                context.read<CatalogProvider>().removeWine(widget.wine.id!);
+                await _catalogRepository.removeWineFromCatalog(
+                    widget.catalogId, widget.wine.id!);
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Confirmar',
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Color.fromARGB(255, 197, 27, 78)),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -102,6 +151,8 @@ class _StandardWineManagementCardState
                       });
                       updateWineQuantity(
                           widget.catalogId, widget.wine.id!, _quantity);
+                    } else {
+                      _confirmRemoveWine();
                     }
                   },
                   color: Colors.white,

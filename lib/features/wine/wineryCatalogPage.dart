@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../resources/userDataManager.dart';
+import '../catalog/catalogRepository.dart';
+import '../profile/profileRepository.dart';
+
 class WineryCatalogPage extends StatefulWidget {
   const WineryCatalogPage({Key? key}) : super(key: key);
 
@@ -16,12 +20,23 @@ class WineryCatalogPage extends StatefulWidget {
 }
 
 class _WineryCatalogPageState extends State<WineryCatalogPage> {
+  final _catalogRepository = CatalogRepository();
+  final _profileRepository = ProfileRepository();
+  late UserDataManager _userDataManager;
   Future<List<Wine>>? _futureWineryCatalog;
+  late int _catalogId;
 
   @override
   void initState() {
     super.initState();
+    _userDataManager = UserDataManager(_catalogRepository, _profileRepository);
+    loadUserData();
     _loadWineryCatalog();
+  }
+
+  Future<void> loadUserData() async {
+    final loadedProfile = await _userDataManager.loadProfile();
+    _catalogId = loadedProfile.catalogId!;
   }
 
   void _loadWineryCatalog() async {
@@ -100,6 +115,7 @@ class _WineryCatalogPageState extends State<WineryCatalogPage> {
                 itemBuilder: (context, index) {
                   final wine = wines[index];
                   return StandardWineryManagementCard(
+                    catalogId: _catalogId,
                     wine: wine,
                   );
                 },

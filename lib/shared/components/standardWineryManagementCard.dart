@@ -1,15 +1,18 @@
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:Winery/features/catalog/catalogProvider.dart';
+import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StandardWineryManagementCard extends StatefulWidget {
   final Wine wine;
+  final int catalogId;
 
   const StandardWineryManagementCard({
     Key? key,
     required this.wine,
+    required this.catalogId,
   }) : super(key: key);
 
   @override
@@ -19,6 +22,8 @@ class StandardWineryManagementCard extends StatefulWidget {
 
 class _StandardWineryManagementCardState
     extends State<StandardWineryManagementCard> {
+  final _catalogRepository = CatalogRepository();
+
   @override
   void initState() {
     super.initState();
@@ -82,6 +87,9 @@ class _StandardWineryManagementCardState
                     final catalogProvider =
                         Provider.of<CatalogProvider>(context, listen: false);
                     catalogProvider.addWine(widget.wine);
+
+                    await _catalogRepository.addWineToCatalog(
+                        widget.catalogId, widget.wine);
 
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Vinho adicionado com Sucesso!')));

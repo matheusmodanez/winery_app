@@ -745,6 +745,30 @@ class CatalogRepository {
     }
   }
 
+  Future<void> removeWineFromCatalog(int catalogId, int wineId) async {
+    try {
+      final catalog = await getCatalog(catalogId);
+
+      if (catalog == null) {
+        print('Catalog not found with id: $catalogId');
+        return;
+      }
+
+      catalog.wines.removeWhere((wine) => wine.id == wineId);
+
+      db = await DatabaseManager.instance.database;
+
+      await db.update(
+        'catalog',
+        {'winesList': json.encode(catalog.toJson()['wines'])},
+        where: 'id = ?',
+        whereArgs: [catalogId],
+      );
+    } catch (e) {
+      print("Error removing wine from catalog: $e");
+    }
+  }
+
   Future<List<Wine>> listWines() async {
     try {
       db = await DatabaseManager.instance.database;
