@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/catalog.dart';
 
 class CatalogProvider extends ChangeNotifier {
+  Catalog _wineryCatalog;
   Catalog _catalog;
   int _totalBottles;
 
-  CatalogProvider(this._catalog, this._totalBottles);
+  CatalogProvider(this._wineryCatalog, this._catalog, this._totalBottles);
 
   Catalog get catalog => _catalog;
+  Catalog get wineryCatalog => _wineryCatalog;
   int get totalBottles => _totalBottles;
 
   void updateWineQuantity(int wineId, int quantity) {
@@ -19,11 +21,6 @@ class CatalogProvider extends ChangeNotifier {
     });
     _calculateTotalBottles();
 
-    notifyListeners();
-  }
-
-  void loadCatalog(Catalog catalog) {
-    _catalog = catalog;
     notifyListeners();
   }
 

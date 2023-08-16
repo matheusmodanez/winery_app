@@ -291,9 +291,13 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 padding: const EdgeInsets.fromLTRB(0, 35, 0, 15),
                 child: SizedBox(
                   child: StandardButton(
-                    buttonText: 'Localizar Vinho',
-                    onPressed: () {},
-                  ),
+                      buttonText: 'Localizar Vinho',
+                      onPressed: () {},
+                      styleParams: ButtonStyleParams(
+                          backgroundColor:
+                              const Color.fromARGB(255, 106, 16, 59),
+                          textSize: 14,
+                          height: 45)),
                 ),
               ),
             ],

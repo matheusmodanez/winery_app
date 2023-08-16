@@ -23,6 +23,7 @@ void main() async {
   final Database db = await DatabaseManager.instance.database;
 
   final catalogRepository = CatalogRepository();
+  await catalogRepository.initializeWineryCatalog(db);
   await catalogRepository.initializeClientCatalog(db);
 
   final profileRepository = ProfileRepository();
@@ -31,10 +32,12 @@ void main() async {
   final wineManagerProvider = WineManageProvider();
   wineManagerProvider.loadLastAccessedWines();
 
-  final catalog = await catalogRepository.getCatalog(0001);
+  final wineryCatalog = await catalogRepository.loadProfileCatalog(00001);
+  final catalog = await catalogRepository.loadProfileCatalog(00002);
+
   final totalBottles =
-      await catalogRepository.calculateTotalBottlesInCatalog(catalog!);
-  final catalogProvider = CatalogProvider(catalog, totalBottles);
+      await catalogRepository.calculateTotalBottlesInCatalog(catalog);
+  final catalogProvider = CatalogProvider(wineryCatalog, catalog, totalBottles);
 
   runApp(
     MultiProvider(

@@ -1,6 +1,5 @@
-import 'package:Winery/features/Catalog/catalogRepository.dart';
+import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:Winery/features/profile/profileRepository.dart';
-import 'package:Winery/features/wine/wineryCatalogRepository.dart';
 import 'package:Winery/resources/userDataManager.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +11,15 @@ class IntroPage extends StatefulWidget {
 
 class _IntroPageState extends State<IntroPage> {
   final _catalogRepository = CatalogRepository();
-  final _wineryRepository = WineryRepository();
   final _profileRepository = ProfileRepository();
   late UserDataManager _userDataManager;
 
   @override
   void initState() {
     super.initState();
-    _userDataManager = UserDataManager(
-        _catalogRepository, _profileRepository, _wineryRepository);
+    _userDataManager = UserDataManager(_catalogRepository, _profileRepository);
     loadUserData();
+    loadWineryData();
   }
 
   Future<void> loadUserData() async {
@@ -30,6 +28,12 @@ class _IntroPageState extends State<IntroPage> {
         await _userDataManager.loadCatalog(loadedProfile.catalogId!);
 
     await _userDataManager.saveUserData(loadedProfile, loadedCatalog);
+  }
+
+  Future<void> loadWineryData() async {
+    final loadedWineryCatalog = await _userDataManager.loadWineryCatalog();
+
+    await _userDataManager.saveWineryData(loadedWineryCatalog);
   }
 
   @override
@@ -65,6 +69,10 @@ class _IntroPageState extends State<IntroPage> {
                     '/',
                   );
                 },
+                styleParams: ButtonStyleParams(
+                    backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                    textSize: 14,
+                    height: 45),
               ),
             ],
           ),

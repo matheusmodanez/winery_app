@@ -16,7 +16,7 @@ class ProfileRepository {
         "profilePicture": 'assets/papa.png',
         "serviceType": 'premium',
         "wineryCapacity": '6',
-        "catalogId": '0001'
+        "catalogId": '00002'
       });
       if (recordsCount == 0) {
         await db.insert("profile", {
@@ -25,7 +25,7 @@ class ProfileRepository {
           "profilePicture": 'assets/papa.png',
           "serviceType": 'premium',
           "wineryCapacity": '6',
-          "catalogId": '0002'
+          "catalogId": '00003'
         });
       }
     }

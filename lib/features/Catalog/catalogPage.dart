@@ -23,7 +23,7 @@ class _CatalogPageState extends State<CatalogPage> {
   int paginaAtual = 0;
   late PageController pc;
 
-  Future<List<Wine>>? _futureWineList;
+  Future<List<Wine>>? _futureClientCatalog;
 
   @override
   void initState() {
@@ -35,12 +35,12 @@ class _CatalogPageState extends State<CatalogPage> {
   void _loadWines() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final catalogJson = prefs.getString('wineryCatalog');
+    final catalogJson = prefs.getString('catalog');
     if (catalogJson != null) {
       final Map<String, dynamic> catalogData = jsonDecode(catalogJson);
       final catalog = Catalog.fromJson(catalogData);
       setState(() {
-        _futureWineList = Future.value(catalog.wines);
+        _futureClientCatalog = Future.value(catalog.wines);
       });
     }
   }
@@ -54,7 +54,7 @@ class _CatalogPageState extends State<CatalogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Wine>>(
-        future: _futureWineList,
+        future: _futureClientCatalog,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

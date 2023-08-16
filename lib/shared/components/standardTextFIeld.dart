@@ -27,8 +27,14 @@ class StandardTextField extends StatelessWidget {
         controller: userInputController,
         onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
-          label: Text(label),
-          border: const OutlineInputBorder(),
+          label: Text(
+            label,
+            style: const TextStyle(
+                fontFamily: 'Poppins', color: Color.fromARGB(255, 58, 58, 58)),
+          ),
+          enabledBorder: const OutlineInputBorder(borderSide: BorderSide()),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromARGB(255, 197, 27, 78))),
           fillColor: Colors.white,
           focusColor: Colors.white,
         ),

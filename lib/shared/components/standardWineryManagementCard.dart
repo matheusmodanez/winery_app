@@ -1,6 +1,8 @@
 import 'package:Winery/domain/entities/wine.dart';
+import 'package:Winery/features/catalog/catalogProvider.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StandardWineryManagementCard extends StatefulWidget {
   final Wine wine;
@@ -44,12 +46,12 @@ class _StandardWineryManagementCardState
         borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
         child: Column(
           children: [
             SizedBox(
               width: 150,
-              height: 65,
+              height: 70,
               child: Visibility(
                 visible:
                     widget.wine.bottle != null && widget.wine.bottle.isNotEmpty,
@@ -68,7 +70,31 @@ class _StandardWineryManagementCardState
                 color: Colors.white,
               ),
             ),
-            StandardButton(buttonText: 'Adicionar', onPressed: () {})
+            const SizedBox(
+              height: 5,
+            ),
+            StandardButton(
+                buttonText: 'Adicionar',
+                onPressed: () async {
+                  try {
+                    widget.wine.quantity = 1;
+
+                    final catalogProvider =
+                        Provider.of<CatalogProvider>(context, listen: false);
+                    catalogProvider.addWine(widget.wine);
+
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Vinho adicionado com Sucesso!')));
+
+                    Navigator.pushNamed(context, '/');
+                  } catch (e) {
+                    Navigator.of(context).pop(false);
+                  }
+                },
+                styleParams: ButtonStyleParams(
+                    backgroundColor: const Color.fromARGB(255, 197, 27, 78),
+                    textSize: 10,
+                    height: 25))
           ],
         ),
       ),

@@ -61,138 +61,168 @@ class _NewWineState extends State<NewWine> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  StandardTextField(
-                      label: 'Nome do Vinho',
-                      userInputController: _wineNameCrontoller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe um Nome';
-                        }
-                        if (value.length < 3 || value.length > 12) {
-                          return 'O campo deve ter entre 3 e 12 caracteres';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.name),
-                  StandardTextField(
-                      label: 'Origem',
-                      userInputController: _wineOriginCrontoller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe a origem do vinho';
-                        }
-                        if (value.length < 3 || value.length > 35) {
-                          return 'O campo deve ter entre 3 e 35 caracteres';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.name),
-                  StandardTextField(
-                      label: 'Tipo de Uva',
-                      userInputController: _wineGrapeTypeCrontoller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe um Tipo de Uva';
-                        }
-                        if (value.length < 2 || value.length > 20) {
-                          return 'O campo deve ter entre 2 e 20 caracteres';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.name),
-                  StandardTextField(
-                      label: 'Notas',
-                      userInputController: _wineNotesCrontoller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe as notas que compõe o vinho';
-                        }
-                        if (value.length < 3 || value.length > 100) {
-                          return 'O campo deve ter entre 3 e 100 caracteres';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.name),
-                  StandardTextField(
-                      label: 'Temperatura ideal',
-                      userInputController: _wineIdetalTempController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe a temperatura ideal';
-                        }
-                        if (value.length < 2 || value.length > 4) {
-                          return 'O campo deve ter entre 2 e 4 caracteres';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.number),
-                  StandardTextField(
-                      label: 'Quantidade de Garrafas',
-                      userInputController: _wineBottleQuantity,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Informe um valor';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.number),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  StandardButton(
-                      buttonText: 'Salvar',
-                      onPressed: () async {
-                        final isValid = _formKey.currentState!.validate();
-                        if (isValid) {
-                          final name = _wineNameCrontoller.text;
-                          final origin = _wineOriginCrontoller.text;
-                          final grapeType = _wineGrapeTypeCrontoller.text;
-                          final notes = _wineNotesCrontoller.text;
-                          final idealTemperature = NumberFormat.decimalPattern()
-                              .parse(_wineIdetalTempController.text)
-                              .toDouble();
-                          const rpClassification = 0.0;
-                          const clientClassification = 0.0;
-                          const bottle = '';
-                          final quantity = NumberFormat.decimalPattern()
-                              .parse(_wineBottleQuantity.text)
-                              .toInt();
-
-                          final wine = Wine(
-                              name: name,
-                              origin: origin,
-                              grapeType: grapeType,
-                              notes: notes,
-                              idealTemperature: idealTemperature,
-                              rpClassification: rpClassification,
-                              clientClassification: clientClassification,
-                              bottle: bottle,
-                              quantity: quantity);
-
-                          try {
-                            final catalogProvider =
-                                Provider.of<CatalogProvider>(context,
-                                    listen: false);
-                            catalogProvider.addWine(wine);
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('Vinho adicionado com Sucesso!')));
-
-                            Navigator.pushNamed(context, '/');
-                          } catch (e) {
-                            Navigator.of(context).pop(false);
-                          }
-                        }
-                      })
-                ]))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'Adicionar vinho ao catálogo',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            _buildForm(context),
+          ],
+        ),
       ),
     );
+  }
+
+  Form _buildForm(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(children: [
+              const SizedBox(height: 5),
+              StandardTextField(
+                  label: 'Nome do Vinho',
+                  userInputController: _wineNameCrontoller,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe um Nome';
+                    }
+                    if (value.length < 3 || value.length > 12) {
+                      return 'O campo deve ter entre 3 e 12 caracteres';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name),
+              const SizedBox(height: 10),
+              StandardTextField(
+                  label: 'Origem',
+                  userInputController: _wineOriginCrontoller,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe a origem do vinho';
+                    }
+                    if (value.length < 3 || value.length > 35) {
+                      return 'O campo deve ter entre 3 e 35 caracteres';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name),
+              const SizedBox(height: 10),
+              StandardTextField(
+                  label: 'Tipo de Uva',
+                  userInputController: _wineGrapeTypeCrontoller,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe um Tipo de Uva';
+                    }
+                    if (value.length < 2 || value.length > 20) {
+                      return 'O campo deve ter entre 2 e 20 caracteres';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name),
+              const SizedBox(height: 10),
+              StandardTextField(
+                  label: 'Notas',
+                  userInputController: _wineNotesCrontoller,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe as notas que compõe o vinho';
+                    }
+                    if (value.length < 3 || value.length > 100) {
+                      return 'O campo deve ter entre 3 e 100 caracteres';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name),
+              const SizedBox(height: 10),
+              StandardTextField(
+                  label: 'Temperatura ideal',
+                  userInputController: _wineIdetalTempController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe a temperatura ideal';
+                    }
+                    if (value.length < 2 || value.length > 4) {
+                      return 'O campo deve ter entre 2 e 4 caracteres';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number),
+              const SizedBox(height: 10),
+              StandardTextField(
+                  label: 'Quantidade de Garrafas',
+                  userInputController: _wineBottleQuantity,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Informe um valor';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.number),
+              const SizedBox(
+                height: 50,
+              ),
+              StandardButton(
+                  buttonText: 'Salvar',
+                  onPressed: () async {
+                    final isValid = _formKey.currentState!.validate();
+                    if (isValid) {
+                      final name = _wineNameCrontoller.text;
+                      final origin = _wineOriginCrontoller.text;
+                      final grapeType = _wineGrapeTypeCrontoller.text;
+                      final notes = _wineNotesCrontoller.text;
+                      final idealTemperature = NumberFormat.decimalPattern()
+                          .parse(_wineIdetalTempController.text)
+                          .toDouble();
+                      const rpClassification = 0.0;
+                      const clientClassification = 0.0;
+                      const bottle = '';
+                      final quantity = NumberFormat.decimalPattern()
+                          .parse(_wineBottleQuantity.text)
+                          .toInt();
+
+                      final wine = Wine(
+                          name: name,
+                          origin: origin,
+                          grapeType: grapeType,
+                          notes: notes,
+                          idealTemperature: idealTemperature,
+                          rpClassification: rpClassification,
+                          clientClassification: clientClassification,
+                          bottle: bottle,
+                          quantity: quantity);
+
+                      try {
+                        final catalogProvider = Provider.of<CatalogProvider>(
+                            context,
+                            listen: false);
+                        catalogProvider.addWine(wine);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Vinho adicionado com Sucesso!')));
+
+                        Navigator.pushNamed(context, '/');
+                      } catch (e) {
+                        Navigator.of(context).pop(false);
+                      }
+                    }
+                  },
+                  styleParams: ButtonStyleParams(
+                      backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                      textSize: 14,
+                      height: 45))
+            ])));
   }
 }

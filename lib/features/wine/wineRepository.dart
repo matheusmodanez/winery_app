@@ -93,10 +93,10 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Cedro / Tabaco",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
-        "quantity": 0
+        "quantity": 0,
       });
       await db.insert("wine", {
         "id": 0008,
@@ -105,7 +105,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cereja Preta / Baunilha / Café",
         "idealTemperature": 19.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -117,7 +117,7 @@ class WineRepository {
         "grapeType": "Nebbiolo",
         "notes": "Cereja / Rosa / Alcatrão",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -129,7 +129,7 @@ class WineRepository {
         "grapeType": "Tempranillo",
         "notes": "Cereja Madura / Couro / Baunilha",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -141,7 +141,7 @@ class WineRepository {
         "grapeType": "Shiraz",
         "notes": "Amora Preta / Chocolate / Pimenta",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -153,7 +153,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Eucalipto / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -165,7 +165,7 @@ class WineRepository {
         "grapeType": "Sémillon",
         "notes": "Mel / Damasco / Baunilha",
         "idealTemperature": 12.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -177,7 +177,7 @@ class WineRepository {
         "grapeType": "Chardonnay / Pinot Noir",
         "notes": "Maçã Verde / Amêndoa / Brioche",
         "idealTemperature": 8.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -189,7 +189,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Cereja / Pimenta",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -201,7 +201,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Sauvignon",
         "notes": "Cassis / Violeta / Tabaco",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -214,7 +214,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Pimenta / Cedro",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -226,7 +226,7 @@ class WineRepository {
         "grapeType": "Sangiovese / Cabernet Sauvignon",
         "notes": "Cereja / Ervas / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -238,7 +238,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Chocolate / Canela",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -250,7 +250,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot",
         "notes": "Cassis / Violeta / Couro",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -262,7 +262,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Sangiovese",
         "notes": "Cassis / Amora / Alcaçuz",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -274,7 +274,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Anis / Chocolate",
         "idealTemperature": 19.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -286,7 +286,7 @@ class WineRepository {
         "grapeType": "Tinto Fino",
         "notes": "Cereja Negra / Cacau / Cedro",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -298,7 +298,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Alcaçuz / Tabaco",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -310,7 +310,7 @@ class WineRepository {
         "grapeType": "Merlot",
         "notes": "Cereja / Floral / Baunilha",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -322,7 +322,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Cabernet Franc",
         "notes": "Cassis / Amora / Ervas",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -334,7 +334,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot",
         "notes": "Cassis / Cereja Preta / Cedro",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -346,19 +346,19 @@ class WineRepository {
         "grapeType": "Sangiovese",
         "notes": "Cereja / Ervas Secas / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
       });
       await db.insert("wine", {
         "id": 0029,
-        "name": "Schrader Cellars CCS Beckstoffer To Kalon Vineyard",
+        "name": "Schrader Cellars CCS Beckstoffer",
         "origin": "Napa Valley, EUA",
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Café / Chocolate",
         "idealTemperature": 19.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -370,7 +370,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Sauvignon",
         "notes": "Cassis / Tabaco / Terracota",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -382,7 +382,7 @@ class WineRepository {
         "grapeType": "Tinto Fino",
         "notes": "Cereja / Cacau / Especiarias",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -394,7 +394,7 @@ class WineRepository {
         "grapeType": "Grenache / Syrah",
         "notes": "Amora / Alcaçuz / Ervas",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -406,7 +406,7 @@ class WineRepository {
         "grapeType": "Merlot",
         "notes": "Cereja / Chocolate / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -418,7 +418,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot",
         "notes": "Cassis / Amora / Café",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -430,7 +430,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Violeta / Alcaçuz",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -442,7 +442,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Eucalipto / Chocolate",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -454,7 +454,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon",
         "notes": "Cassis / Cereja / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -466,7 +466,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Amora / Café",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -478,7 +478,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot",
         "notes": "Cassis / Tabaco / Pimenta",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -490,7 +490,7 @@ class WineRepository {
         "grapeType": "Chardonnay / Pinot Noir / Pinot Meunier",
         "notes": "Maçã / Brioche / Nozes",
         "idealTemperature": 10.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -502,7 +502,7 @@ class WineRepository {
         "grapeType": "Variedades Múltiplas",
         "notes": "Frutas Exóticas / Mel / Floral",
         "idealTemperature": 14.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -514,7 +514,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Cereja / Couro",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -526,7 +526,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot",
         "notes": "Cassis / Amora / Chocolate",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -538,7 +538,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Violeta / Alcaçuz",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -550,7 +550,7 @@ class WineRepository {
         "grapeType": "Touriga Nacional / Touriga Franca",
         "notes": "Amora / Especiarias / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -562,7 +562,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Cereja / Violeta",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -574,7 +574,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Cabernet Franc",
         "notes": "Cassis / Eucalipto / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -586,7 +586,7 @@ class WineRepository {
         "grapeType": "Riesling",
         "notes": "Limão / Flor de Laranjeira / Mineral",
         "idealTemperature": 10.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -598,7 +598,7 @@ class WineRepository {
         "grapeType": "Merlot / Cabernet Franc",
         "notes": "Cassis / Violeta / Terra",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -610,7 +610,7 @@ class WineRepository {
         "grapeType": "Cabernet Sauvignon / Merlot / Cabernet Franc",
         "notes": "Cassis / Amora / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -622,7 +622,7 @@ class WineRepository {
         "grapeType": "Syrah / Viognier",
         "notes": "Amora / Floral / Bacon",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -634,7 +634,7 @@ class WineRepository {
         "grapeType": "Tempranillo",
         "notes": "Cereja / Couro / Tabaco",
         "idealTemperature": 17.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -646,7 +646,7 @@ class WineRepository {
         "grapeType": "Syrah",
         "notes": "Amora / Chocolate / Pimenta",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0
@@ -658,7 +658,7 @@ class WineRepository {
         "grapeType": "Sangiovese / Cabernet Sauvignon",
         "notes": "Cassis / Amora / Baunilha",
         "idealTemperature": 18.0,
-        "rpClassificaiton": 0,
+        "rpClassification": 0,
         "clientClassification": 0,
         "bottle": '',
         "quantity": 0

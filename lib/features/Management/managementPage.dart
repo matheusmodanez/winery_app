@@ -160,7 +160,13 @@ class _ManagementPageState extends State<ManagementPage> {
             const SizedBox(
               height: 50,
             ),
-            StandardButton(buttonText: "Editar Perfil", onPressed: () {}),
+            StandardButton(
+                buttonText: "Editar Perfil",
+                onPressed: () {},
+                styleParams: ButtonStyleParams(
+                    backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                    textSize: 14,
+                    height: 45)),
             const SizedBox(
               height: 15,
             ),
@@ -168,7 +174,11 @@ class _ManagementPageState extends State<ManagementPage> {
                 buttonText: "Gerenciar Catálogo",
                 onPressed: () {
                   Navigator.pushNamed(context, '/catalogManagement');
-                }),
+                },
+                styleParams: ButtonStyleParams(
+                    backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                    textSize: 14,
+                    height: 45)),
           ],
         ),
       ),

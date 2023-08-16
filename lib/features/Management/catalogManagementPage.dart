@@ -17,7 +17,7 @@ class CatalogManagementPage extends StatefulWidget {
 }
 
 class _CatalogManagementPageState extends State<CatalogManagementPage> {
-  Future<List<Wine>>? _futureWineList;
+  Future<List<Wine>>? _futureCatalogWines;
   late int catalogId;
 
   @override
@@ -34,7 +34,7 @@ class _CatalogManagementPageState extends State<CatalogManagementPage> {
       final Map<String, dynamic> catalogData = jsonDecode(catalogJson);
       final catalog = Catalog.fromJson(catalogData);
       setState(() {
-        _futureWineList = Future.value(catalog.wines);
+        _futureCatalogWines = Future.value(catalog.wines);
       });
 
       catalogId = catalog.id!;
@@ -45,7 +45,7 @@ class _CatalogManagementPageState extends State<CatalogManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Wine>>(
-        future: _futureWineList,
+        future: _futureCatalogWines,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -80,6 +80,10 @@ class _CatalogManagementPageState extends State<CatalogManagementPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/newWine');
                   },
+                  styleParams: ButtonStyleParams(
+                      backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                      textSize: 14,
+                      height: 45),
                 ),
               ),
               Flexible(
@@ -88,6 +92,10 @@ class _CatalogManagementPageState extends State<CatalogManagementPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/wineryCatalog');
                   },
+                  styleParams: ButtonStyleParams(
+                      backgroundColor: const Color.fromARGB(255, 106, 16, 59),
+                      textSize: 14,
+                      height: 45),
                 ),
               ),
             ],
