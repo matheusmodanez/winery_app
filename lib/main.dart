@@ -8,6 +8,7 @@ import 'package:Winery/features/wine/newWine.dart';
 import 'package:Winery/features/wine/wineManageProvider.dart';
 import 'package:Winery/features/wine/winePage.dart';
 import 'package:Winery/features/wine/wineryCatalogPage.dart';
+import 'package:Winery/shared/utils/countryUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -35,9 +36,13 @@ void main() async {
   final wineryCatalog = await catalogRepository.loadProfileCatalog(00001);
   final catalog = await catalogRepository.loadProfileCatalog(00002);
 
+  final List<Wine> filteredWines = catalog.wines;
+  final List<String> availableTags = CountryUtils.countries;
+
   final totalBottles =
       await catalogRepository.calculateTotalBottlesInCatalog(catalog);
-  final catalogProvider = CatalogProvider(wineryCatalog, catalog, totalBottles);
+  final catalogProvider = CatalogProvider(
+      wineryCatalog, catalog, totalBottles, filteredWines, availableTags);
 
   runApp(
     MultiProvider(

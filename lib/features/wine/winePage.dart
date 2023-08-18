@@ -1,4 +1,5 @@
 import 'package:Winery/features/wine/wineManageProvider.dart';
+import 'package:Winery/shared/utils/countryUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:Winery/domain/entities/wine.dart';
 import 'package:Winery/features/catalog/catalogRepository.dart';
@@ -68,24 +69,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
           )
           .toList();
 
-      String getCountryFlagEmoji(String country) {
-        switch (wine.origin
-            .toLowerCase()
-            .split(',')
-            .map((term) => term.trim())
-            .last) {
-          case 'frança':
-            return '🇫🇷';
-          case 'itália':
-            return '🇮🇹';
-          case 'espanha':
-            return '🇪🇸';
-          case 'portugal':
-            return '🇵🇹';
-          default:
-            return '';
-        }
-      }
+      String flag = CountryUtils.getCountryFlagEmoji(wine);
 
       return Scaffold(
         body: SingleChildScrollView(
@@ -196,8 +180,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                         end: 0.1,
                                         width: 115,
                                         height: 75,
-                                        text1:
-                                            "${getCountryFlagEmoji(wine.origin)} ${wine.origin}",
+                                        text1: "$flag ${wine.origin}",
                                         text2: "Origem",
                                         text1Size: 14,
                                         text2Size: 12),

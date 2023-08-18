@@ -18,7 +18,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/chateau_margaux.png',
+        "bottle": 'assets/bottles/chateau_margaux.png',
         "quantity": 0,
       });
 
@@ -31,7 +31,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/barolo-piemont.png',
+        "bottle": 'assets/bottles/barolo-piemont.png',
         "quantity": 0,
       });
 
@@ -44,7 +44,7 @@ class WineRepository {
         "idealTemperature": 20.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/las_beatas.png',
+        "bottle": 'assets/bottles/las_beatas.png',
         "quantity": 0,
       });
 
@@ -57,7 +57,7 @@ class WineRepository {
         "idealTemperature": 18,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/covela.png',
+        "bottle": 'assets/bottles/covela.png',
         "quantity": 0,
       });
 
@@ -70,7 +70,7 @@ class WineRepository {
         "idealTemperature": 10.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/sancerre.png',
+        "bottle": 'assets/bottles/sancerre.png',
         "quantity": 0,
       });
 
@@ -83,7 +83,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": 'assets/brunello-di-montalcino.png',
+        "bottle": 'assets/bottles/brunello-di-montalcino.png',
         "quantity": 0,
       });
       await db.insert("wine", {
@@ -95,7 +95,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/chateau_latife_rothschild.png',
         "quantity": 0,
       });
       await db.insert("wine", {
@@ -107,7 +107,7 @@ class WineRepository {
         "idealTemperature": 19.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/opus_one.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -119,7 +119,7 @@ class WineRepository {
         "idealTemperature": 17.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/barolo_monfortino.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -131,7 +131,7 @@ class WineRepository {
         "idealTemperature": 17.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/rioja_alta_gran_reserva_904.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -143,7 +143,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/penfold_grange.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -155,7 +155,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/sassicaia.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -167,7 +167,7 @@ class WineRepository {
         "idealTemperature": 12.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/chateau_dyquem.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -179,7 +179,7 @@ class WineRepository {
         "idealTemperature": 8.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/dom_perignon.png',
         "quantity": 0
       });
       await db.insert("wine", {
@@ -191,7 +191,7 @@ class WineRepository {
         "idealTemperature": 18.0,
         "rpClassification": 0,
         "clientClassification": 0,
-        "bottle": '',
+        "bottle": 'assets/bottles/almaviva.png',
         "quantity": 0
       });
       await db.insert("wine", {

@@ -71,13 +71,7 @@ flutter:
     - assets/logos/logo2.png
     - assets/logos/logo_icon_192.png
     - assets/logos/logo_icon_512.png
-    - assets/chateau_margaux.png
-    - assets/barolo-piemont.png
-    - assets/las_beatas.png
-    - assets/covela.png
-    - assets/sancerre.png
-    - assets/brunello-di-montalcino.png
-    - assets/cover.jpg
+    - assets/bottles/
     - assets/papa.png
     - assets/render01.obj
     - assets/render02.obj

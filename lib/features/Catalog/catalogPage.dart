@@ -23,16 +23,18 @@ class _CatalogPageState extends State<CatalogPage> {
   int paginaAtual = 0;
   late PageController pc;
 
+  String _selectedTag = 'Todas';
+
   Future<List<Wine>>? _futureClientCatalog;
 
   @override
   void initState() {
     super.initState();
     pc = PageController(initialPage: paginaAtual);
-    _loadWines();
+    _loadWines(_selectedTag);
   }
 
-  void _loadWines() async {
+  void _loadWines(String filterTag) async {
     final prefs = await SharedPreferences.getInstance();
 
     final catalogJson = prefs.getString('catalog');
@@ -43,6 +45,9 @@ class _CatalogPageState extends State<CatalogPage> {
         _futureClientCatalog = Future.value(catalog.wines);
       });
     }
+
+    final catalogProvider = context.read<CatalogProvider>();
+    catalogProvider.applyFilter(filterTag);
   }
 
   void _addLastAccessedWine(Wine wine) {
@@ -105,7 +110,7 @@ class _CatalogPageState extends State<CatalogPage> {
           const Text(
             'Recentemente acessado',
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -122,44 +127,132 @@ class _CatalogPageState extends State<CatalogPage> {
     );
   }
 
+  Widget _buildFilterTags() {
+    final catalogProvider = context.watch<CatalogProvider>();
+    final filterTags = catalogProvider.availableTags;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Filtrar por origem',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 5),
+        SizedBox(
+          height: 35,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: filterTags.length + 1,
+            itemBuilder: (context, index) {
+              final tag = index == 0 ? 'Todas' : filterTags[index - 1];
+              final isSelected = tag == _selectedTag;
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedTag = tag;
+                    _loadWines(_selectedTag);
+                  });
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  margin: const EdgeInsets.only(right: 5),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? const Color.fromARGB(255, 197, 27, 78)
+                        : Colors.grey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        tag,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
+                      if (isSelected && _selectedTag != 'Todas')
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedTag = 'Todas';
+                              _loadWines(_selectedTag);
+                            });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _buildCatalogWines(List<Wine> wines) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+      padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Seu catálogo',
             style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.6,
-            child: Consumer<CatalogProvider>(
+          _buildFilterTags(),
+          Consumer<CatalogProvider>(builder: (context, catalogProvider, child) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.6,
+              child: Consumer<CatalogProvider>(
                 builder: (context, catalogProvider, child) {
-              final wines = catalogProvider.catalog.wines;
-              return GridView.builder(
-                padding: EdgeInsets.zero,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 4,
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: wines.length,
-                itemBuilder: (context, index) {
-                  final wine = wines[index];
-                  return StandardWineItem(
-                    wine: wine,
-                    onTap: (wine) {
-                      _addLastAccessedWine(wine);
-                    },
+                  final filteredWines = catalogProvider.filteredWines;
+
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: GridView.builder(
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredWines.length,
+                      itemBuilder: (context, index) {
+                        final wine = filteredWines[index];
+                        return StandardWineItem(
+                          wine: wine,
+                          onTap: (wine) {
+                            _addLastAccessedWine(wine);
+                          },
+                        );
+                      },
+                    ),
                   );
                 },
-              );
-            }),
-          ),
+              ),
+            );
+          })
         ],
       ),
     );
