@@ -1,5 +1,6 @@
 import 'package:Winery/shared/components/customBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:object_3d/object_3d.dart';
 
 class WineryModel extends StatefulWidget {
@@ -22,13 +23,21 @@ class _WineryModelState extends State<WineryModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Column(
+      body: Column(
         children: [
-          Object3D(
-            size: Size(375.0, 500.0),
-            path: 'assets/render02Triang.obj',
-          ),
           SizedBox(
+            width: MediaQuery.of(context).size.width * 1,
+            height: MediaQuery.of(context).size.height * 0.75,
+            child: const ModelViewer(
+              src: 'assets/wineryModel.glb',
+              alt: 'A 3D model',
+              ar: true,
+              autoRotate: true,
+              cameraControls: true,
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          const SizedBox(
             height: 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

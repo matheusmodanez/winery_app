@@ -42,6 +42,7 @@ dependencies:
   flutter_rating_bar: 4.0.1
   provider: ^6.0.5
   object_3d: ^0.0.1
+  model_viewer_plus: ^1.6.1
   
 dev_dependencies:
   flutter_test:
@@ -73,12 +74,8 @@ flutter:
     - assets/logos/logo_icon_512.png
     - assets/bottles/
     - assets/papa.png
-    - assets/render01.obj
-    - assets/render02.obj
-    - assets/render01Triang.obj
-    - assets/render02Triang.obj
-    - assets/file.obj
-    - assets/mtlTest.mtl
+    - assets/wineryModel.gltf
+    - assets/wineryModel.glb
 
   fonts:
       - family: MuseoModerno
