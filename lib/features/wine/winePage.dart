@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Winery/features/wine/wineManageProvider.dart';
 import 'package:Winery/shared/utils/countryUtils.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:Winery/shared/components/standardGlassCards.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class WineDetailsPage extends StatefulWidget {
   final Wine? wine;
@@ -37,6 +41,63 @@ class _WineDetailsPage extends State<WineDetailsPage> {
 
   void updateClientClassification(int? id, double newClassification) {
     _catalogRepository.updateClientClassification(id, newClassification);
+  }
+
+  Future<void> locateWine(int winePosition) async {
+    String led = '';
+
+    switch (winePosition) {
+      case 1:
+        led = 'led1';
+        break;
+      case 2:
+        led = 'led2';
+        break;
+      case 3:
+        led = 'led3';
+        break;
+      case 4:
+        led = 'led4';
+        break;
+      case 5:
+        led = 'led5';
+        break;
+      case 6:
+        led = 'led6';
+        break;
+      default:
+        '';
+    }
+
+    final url = Uri.parse(
+        'https://api2.arduino.cc/iot/v2/things/bb5888a4-6f33-4e0d-9e1c-95f954896c88/properties/91f5386d-4c7d-4e18-a18a-c3240af8f8e8/publish');
+
+    final prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('access_token');
+
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    final body = {
+      'value': led,
+    };
+
+    try {
+      final response = await http.put(
+        url,
+        headers: headers,
+        body: jsonEncode(body),
+      );
+      if (response.statusCode == 200) {
+        print('Solicitação bem sucedida: ${response.statusCode}');
+      } else {
+        print('Erro na solicitação: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro de rede: $e');
+    }
   }
 
   @override
@@ -202,8 +263,7 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                                   width: 100,
                                   height: 450,
                                   child: Visibility(
-                                    visible: wine.bottle != null &&
-                                        wine.bottle.isNotEmpty,
+                                    visible: wine.bottle.isNotEmpty,
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           0, 50, 0, 0),
@@ -275,7 +335,9 @@ class _WineDetailsPage extends State<WineDetailsPage> {
                 child: SizedBox(
                   child: StandardButton(
                       buttonText: 'Localizar Vinho',
-                      onPressed: () {},
+                      onPressed: () {
+                        locateWine(wine.id!);
+                      },
                       styleParams: ButtonStyleParams(
                           backgroundColor:
                               const Color.fromARGB(255, 106, 16, 59),

@@ -58,8 +58,7 @@ class _StandardWineryManagementCardState
               width: 150,
               height: 70,
               child: Visibility(
-                visible:
-                    widget.wine.bottle != null && widget.wine.bottle.isNotEmpty,
+                visible: widget.wine.bottle.isNotEmpty,
                 child: Image(
                   image: AssetImage(widget.wine.bottle),
                   fit: BoxFit.contain,

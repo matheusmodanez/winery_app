@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.0.5
   object_3d: ^0.0.1
   model_viewer_plus: ^1.6.1
+  http: ^0.13.3
   
 dev_dependencies:
   flutter_test:

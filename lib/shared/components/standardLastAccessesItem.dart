@@ -42,7 +42,7 @@ class LastAccessedWinesList extends StatelessWidget {
                   ),
                   Positioned.fill(
                     child: Visibility(
-                      visible: wine.bottle != null && wine.bottle.isNotEmpty,
+                      visible: wine.bottle.isNotEmpty,
                       child: Image(
                         image: AssetImage(wine.bottle),
                       ),

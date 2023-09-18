@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:Winery/features/catalog/catalogRepository.dart';
 import 'package:Winery/features/profile/profileRepository.dart';
 import 'package:Winery/resources/userDataManager.dart';
 import 'package:Winery/shared/components/standartButton.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -20,6 +24,7 @@ class _IntroPageState extends State<IntroPage> {
     _userDataManager = UserDataManager(_catalogRepository, _profileRepository);
     loadUserData();
     loadWineryData();
+    fetchTokenFromArduinoCloud();
   }
 
   Future<void> loadUserData() async {
@@ -34,6 +39,45 @@ class _IntroPageState extends State<IntroPage> {
     final loadedWineryCatalog = await _userDataManager.loadWineryCatalog();
 
     await _userDataManager.saveWineryData(loadedWineryCatalog);
+  }
+
+  Future<void> saveAccessToken(String accessToken) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('access_token', accessToken);
+  }
+
+  Future<void> fetchTokenFromArduinoCloud() async {
+    final url = Uri.parse('https://api2.arduino.cc/iot/v1/clients/token');
+
+    final Map<String, String> body = {
+      'grant_type': 'client_credentials',
+      'client_id': 'UXFdawSR3oKLu2WTbHYS6FeC44NAvYaa',
+      'client_secret':
+          'Q2MBkQc3xBpyxvwR6fo6UkhoHLK7Yk04Rv23IJtC2VES1YQcrKIrUGhhLAXuEP47',
+      'audience': 'https://api2.arduino.cc/iot',
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body,
+      );
+
+      final jsonResponse = jsonDecode(response.body);
+
+      final accessToken = jsonResponse['access_token'];
+
+      if (response.statusCode == 200) {
+        await saveAccessToken(accessToken);
+      } else {
+        print('Erro na solicitação: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro de rede: $e');
+    }
   }
 
   @override
